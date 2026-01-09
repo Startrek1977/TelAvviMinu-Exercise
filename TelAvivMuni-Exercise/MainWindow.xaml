@@ -2,15 +2,100 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TelAvivMuni_Exercise"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:TelAvivMuni_Exercise.ViewModels"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
-    <Window.DataContext>
-        <vm:MainWindowViewModel />
-    </Window.DataContext>
-    <Grid>
+        Title="Tel-Aviv Muni - Exercise"
+        Width="520"
+        Height="430"
+        mc:Ignorable="d">
+  <Window.DataContext>
+    <vm:MainWindowViewModel />
+  </Window.DataContext>
+  <Grid>
+    <StackPanel Margin="20">
+      <!--  Header  -->
+      <TextBlock Margin="0,0,0,5"
+                 FontSize="24"
+                 FontWeight="Bold"
+                 Text="DataBrowserBox Control" />
+      <TextBlock Margin="0,0,0,20"
+                 FontSize="12"
+                 Foreground="Gray"
+                 Text="A reusable WPF control for browsing and selecting items from a collection" />
 
-    </Grid>
+      <!--  Example 1  -->
+      <Border Margin="0,0,0,15"
+              Padding="15"
+              Background="White"
+              CornerRadius="5">
+        <StackPanel>
+          <TextBlock Margin="0,0,0,5"
+                     FontSize="14"
+                     FontWeight="SemiBold"
+                     Text="Example 1: Auto-generated Columns" />
+          <TextBlock Margin="0,0,0,10"
+                     FontSize="11"
+                     Foreground="Gray"
+                     Text="Columns are automatically generated from the object properties." />
+
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="60" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Center"
+                       Text="Product:" />
+            <!--  Placeholder for custom control  -->
+            <Border x:Name="Example1ControlPlaceholder"
+                    Grid.Column="1"
+                    Height="30"
+                    BorderBrush="Orange"
+                    BorderThickness="2" />
+          </Grid>
+
+          <TextBlock Margin="60,5,0,0"
+                     FontSize="11"
+                     Foreground="Gray"
+                     Text="No selection" />
+        </StackPanel>
+      </Border>
+
+      <!--  Example 2  -->
+      <Border Padding="15"
+              Background="White"
+              CornerRadius="5">
+        <StackPanel>
+          <TextBlock Margin="0,0,0,5"
+                     FontSize="14"
+                     FontWeight="SemiBold"
+                     Text="Example 2: Custom Column Configuration" />
+          <TextBlock Margin="0,0,0,10"
+                     FontSize="11"
+                     Foreground="Gray"
+                     Text="Columns are explicitly defined with custom headers, widths, and formats." />
+
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="60" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Center"
+                       Text="Product:" />
+            <!--  Placeholder for custom control  -->
+            <Border x:Name="Example2ControlPlaceholder"
+                    Grid.Column="1"
+                    Height="30"
+                    BorderBrush="Orange"
+                    BorderThickness="2" />
+          </Grid>
+
+          <TextBlock Margin="60,5,0,0"
+                     FontSize="11"
+                     Foreground="Gray"
+                     Text="No selection" />
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </Grid>
 </Window>
