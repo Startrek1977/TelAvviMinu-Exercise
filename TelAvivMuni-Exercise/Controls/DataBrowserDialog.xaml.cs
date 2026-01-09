@@ -9,6 +9,8 @@ namespace TelAvivMuni_Exercise.Controls
 {
     public partial class DataBrowserDialog : Window
     {
+        private bool _isUpdatingSelection = false;
+
         public DataBrowserDialog()
         {
             InitializeComponent();
@@ -31,17 +33,25 @@ namespace TelAvivMuni_Exercise.Controls
                     if (selectedItem == null)
                         return;
 
-                    // Re-synchronize the ICollectionView's CurrentItem
-                    viewModel.FilteredItems.MoveCurrentTo(selectedItem);
+                    _isUpdatingSelection = true;
+                    try
+                    {
+                        // Re-synchronize the ICollectionView's CurrentItem
+                        viewModel.FilteredItems.MoveCurrentTo(selectedItem);
 
-                    // Force the DataGrid to update its selection by clearing and re-setting
-                    ProductsDataGrid.SelectedItem = null;
-                    ProductsDataGrid.UpdateLayout();
-                    ProductsDataGrid.SelectedItem = selectedItem;
+                        // Force the DataGrid to update its selection by clearing and re-setting
+                        ProductsDataGrid.SelectedItem = null;
+                        ProductsDataGrid.UpdateLayout();
+                        ProductsDataGrid.SelectedItem = selectedItem;
 
-                    // Scroll into view and focus
-                    ProductsDataGrid.ScrollIntoView(selectedItem);
-                    ProductsDataGrid.Focus();
+                        // Scroll into view and focus
+                        ProductsDataGrid.ScrollIntoView(selectedItem);
+                        ProductsDataGrid.Focus();
+                    }
+                    finally
+                    {
+                        _isUpdatingSelection = false;
+                    }
                 }), System.Windows.Threading.DispatcherPriority.ContextIdle);
             }
         }
@@ -67,6 +77,60 @@ namespace TelAvivMuni_Exercise.Controls
                 {
                     DialogResult = viewModel.DialogResult;
                 }
+            }
+            else if (e.PropertyName == nameof(DataBrowserDialogViewModel.SearchText))
+            {
+                // When search text changes, preserve the DataGrid selection
+                if (DataContext is DataBrowserDialogViewModel viewModel && viewModel.SelectedItem != null)
+                {
+                    var selectedItem = viewModel.SelectedItem;
+
+                    // Use a dispatcher to ensure the filtered items have been updated
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        // Check if the selected item is in the filtered collection
+                        bool isInFilteredCollection = viewModel.FilteredItems.Cast<object>().Contains(selectedItem);
+
+                        if (isInFilteredCollection)
+                        {
+                            _isUpdatingSelection = true;
+                            try
+                            {
+                                // Item is visible, force selection refresh
+                                ProductsDataGrid.SelectedItem = null;
+                                ProductsDataGrid.UpdateLayout();
+                                ProductsDataGrid.SelectedItem = selectedItem;
+
+                                // Scroll into view if needed
+                                try
+                                {
+                                    ProductsDataGrid.ScrollIntoView(selectedItem);
+                                }
+                                catch
+                                {
+                                    // Ignore scroll errors
+                                }
+                            }
+                            finally
+                            {
+                                _isUpdatingSelection = false;
+                            }
+                        }
+                    }), System.Windows.Threading.DispatcherPriority.ContextIdle);
+                }
+            }
+        }
+
+        private void ProductsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Don't update ViewModel if we're programmatically updating the selection
+            if (_isUpdatingSelection)
+                return;
+
+            // Update the ViewModel when user manually selects an item
+            if (DataContext is DataBrowserDialogViewModel viewModel && e.AddedItems.Count > 0)
+            {
+                viewModel.SelectedItem = e.AddedItems[0];
             }
         }
 

@@ -95,12 +95,14 @@
                    FontSize="14"
                    Foreground="#757575"
                    Text="&#x1F50D;" />
-        <TextBox Grid.Column="1"
+        <TextBox x:Name="SearchTextBox"
+                 Grid.Column="1"
                  Padding="0,8"
                  VerticalContentAlignment="Center"
                  Background="Transparent"
                  BorderThickness="0"
                  FontSize="13"
+                 KeyDown="SearchTextBox_KeyDown"
                  Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
         <Button Grid.Column="2"
                 Width="20"
@@ -159,14 +161,13 @@
               HeadersVisibility="Column"
               HorizontalGridLinesBrush="#F5F5F5"
               IsReadOnly="True"
-              IsSynchronizedWithCurrentItem="True"
               ItemsSource="{Binding FilteredItems}"
               RowBackground="White"
               RowHeight="36"
               ScrollViewer.HorizontalScrollBarVisibility="Auto"
               ScrollViewer.VerticalScrollBarVisibility="Auto"
-              SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-              SelectionMode="Single">
+              SelectionMode="Single"
+              SelectionChanged="ProductsDataGrid_SelectionChanged">
       <DataGrid.ColumnHeaderStyle>
         <Style TargetType="DataGridColumnHeader">
           <Setter Property="Background" Value="#FAFAFA" />

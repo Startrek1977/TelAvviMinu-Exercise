@@ -24,9 +24,29 @@ namespace TelAvivMuni_Exercise.ViewModels
             {
                 if (SetProperty(ref _searchText, value))
                 {
+                    // Preserve the selected item before refreshing the filter
+                    var currentSelection = _selectedItem;
+
                     _filteredItems.Refresh();
                     OnPropertyChanged(nameof(ItemsCount));
                     OnPropertyChanged(nameof(HasSearchText));
+
+                    // Always restore the selection to prevent it from being cleared
+                    if (currentSelection != null)
+                    {
+                        // Check if the selected item is still visible after filtering
+                        if (_filteredItems.Cast<object>().Contains(currentSelection))
+                        {
+                            // Item is still visible, move the collection view to it
+                            _filteredItems.MoveCurrentTo(currentSelection);
+
+                            // Explicitly notify that SelectedItem hasn't changed to force DataGrid update
+                            // This is especially important when clearing the filter
+                            OnPropertyChanged(nameof(SelectedItem));
+                        }
+                        // Don't clear the SelectedItem even if it's filtered out
+                        // This ensures the OK button remains enabled and selection is preserved
+                    }
                 }
             }
         }

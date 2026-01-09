@@ -56,7 +56,18 @@
           <TextBlock Margin="60,5,0,0"
                      FontSize="11"
                      Foreground="Gray"
-                     Text="No selection" />
+                     Text="No selection">
+            <TextBlock.Style>
+              <Style TargetType="TextBlock">
+                <Setter Property="Visibility" Value="Hidden" />
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding SelectedProduct1}" Value="{x:Null}">
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </TextBlock.Style>
+          </TextBlock>
         </StackPanel>
       </Border>
 
@@ -107,7 +118,18 @@
           <TextBlock Margin="60,5,0,0"
                      FontSize="11"
                      Foreground="Gray"
-                     Text="No selection" />
+                     Text="No selection">
+            <TextBlock.Style>
+              <Style TargetType="TextBlock">
+                <Setter Property="Visibility" Value="Hidden" />
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding SelectedProduct2}" Value="{x:Null}">
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </TextBlock.Style>
+          </TextBlock>
         </StackPanel>
       </Border>
     </StackPanel>

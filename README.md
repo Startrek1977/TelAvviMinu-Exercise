@@ -172,12 +172,15 @@ The control supports two modes for column display:
 ### Selection Behavior
 - **Initial Selection** - Previously selected item is highlighted when dialog opens
 - **Auto-Scroll** - Selected item is automatically scrolled into view
-- **Persistence** - Selection is maintained when dialog reopens
-- **Visual Feedback** - Bold blue text on light blue background
+- **Filter Persistence** - Selection remains when typing filter text (if item is visible)
+- **Clear Filter Persistence** - Selection is restored when clearing the filter
+- **Dialog Reopening** - Selection is maintained and highlighted when dialog reopens
+- **Visual Feedback** - Bold blue text on light blue background (#E3F2FD, #1976D2)
 
 ### Visual States
-- **Watermark** - Gray italic text: "Click to select..."
-- **Selected Item** - Black bold text with item name
+- **Watermark** - Gray italic text: "Click to select..." when no item is selected
+- **Selected Item** - Black bold text with item name displayed in control
+- **No Selection Label** - Gray "No selection" text (hidden but preserves space when item is selected)
 - **Grid Selection** - Blue background (#E3F2FD) with bold blue text (#1976D2)
 - **Row Hover** - Light gray background (#F5F5F5)
 
@@ -233,11 +236,14 @@ Or simply press F5 in Visual Studio.
 - Silent fallback for missing data files
 
 ### Selection Synchronization
-- Uses `ICollectionView.MoveCurrentTo()` for proper synchronization
-- `IsSynchronizedWithCurrentItem="True"` on DataGrid
-- Dispatcher with `ContextIdle` priority ensures UI is fully rendered
-- Captures selected item reference before async operations
+- Uses `ICollectionView.MoveCurrentTo()` for proper synchronization between ViewModel and DataGrid
+- SelectionChanged event handler updates ViewModel when user selects items
+- Circular update prevention using `_isUpdatingSelection` flag
+- Dispatcher with `ContextIdle` priority ensures UI is fully rendered before selection updates
+- Captures selected item reference before async operations to handle timing issues
+- Forces DataGrid selection refresh by temporarily clearing and re-setting selection
 - Validates selection before scrolling into view
+- Preserves selection state during filter operations (SearchText changes)
 
 ## Future Enhancements
 
