@@ -1,0 +1,134 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:TelAvivMuni_Exercise.Controls">
+
+  <!-- Base Button Style -->
+  <Style x:Key="BaseButtonStyle" TargetType="Button">
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border Background="{TemplateBinding Background}"
+                  CornerRadius="3"
+                  Padding="16,6">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Blue Button Style (Primary actions) -->
+  <Style x:Key="BlueButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+    <Setter Property="Background" Value="#2196F3" />
+    <Setter Property="Foreground" Value="White" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="#1976D2" />
+      </Trigger>
+      <Trigger Property="IsPressed" Value="True">
+        <Setter Property="Background" Value="#0D47A1" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Background" Value="#BDBDBD" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <!-- Gray Button Style (Secondary actions) -->
+  <Style x:Key="GrayButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+    <Setter Property="Background" Value="#F5F5F5" />
+    <Setter Property="Foreground" Value="#424242" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="#EEEEEE" />
+      </Trigger>
+      <Trigger Property="IsPressed" Value="True">
+        <Setter Property="Background" Value="#E0E0E0" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <!-- Clear Button Style (Small circular button with X) -->
+  <Style x:Key="ClearButtonStyle" TargetType="Button">
+    <Setter Property="Width" Value="20" />
+    <Setter Property="Height" Value="20" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Content" Value="&#x2715;" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="#9E9E9E" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border Background="{TemplateBinding Background}"
+                  CornerRadius="10">
+            <ContentPresenter HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Background" Value="#F0F0F0" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Browse Button Style (... button for DataBrowserBox) -->
+  <Style x:Key="BrowseButtonStyle" TargetType="Button">
+    <Setter Property="Width" Value="30" />
+    <Setter Property="Background" Value="#F5F5F5" />
+    <Setter Property="Foreground" Value="#424242" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Content" Value="..." />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="#E0E0E0"
+                  BorderThickness="1,0,0,0"
+                  CornerRadius="0,0,0,0"
+                  Padding="8,6">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Background" Value="#EEEEEE" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter Property="Background" Value="#E0E0E0" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- TextBox Style for DataBrowserBox display -->
+  <Style x:Key="DataBrowserTextBoxStyle" TargetType="TextBox">
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="IsReadOnly" Value="True" />
+    <Setter Property="Padding" Value="5,0,25,0" />
+    <Style.Triggers>
+      <Trigger Property="Opacity" Value="0.5">
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontStyle" Value="Italic" />
+      </Trigger>
+      <Trigger Property="Opacity" Value="1">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontStyle" Value="Normal" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+</ResourceDictionary>

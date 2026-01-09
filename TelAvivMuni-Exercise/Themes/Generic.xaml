@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:TelAvivMuni_Exercise.Controls">
 
+  <!-- DataBrowserBox Control Style -->
   <Style TargetType="{x:Type controls:DataBrowserBox}">
     <Setter Property="Background" Value="White" />
     <Setter Property="BorderBrush" Value="#CCCCCC" />
@@ -21,33 +22,16 @@
               <!-- Wrap TextBox in inner Grid for overlay -->
               <Grid Grid.Column="0">
                 <TextBox x:Name="PART_TextBox"
-                         VerticalContentAlignment="Center"
-                         Background="Transparent"
-                         BorderThickness="0"
-                         IsReadOnly="True"
+                         Style="{StaticResource DataBrowserTextBoxStyle}"
                          Opacity="0.5"
-                         Padding="5,0,25,0"
-                         Text="Click to select...">
-                  <TextBox.Style>
-                    <Style TargetType="TextBox">
-                      <Setter Property="FontWeight" Value="Normal" />
-                      <Setter Property="FontStyle" Value="Italic" />
-                      <Style.Triggers>
-                        <Trigger Property="Opacity" Value="1">
-                          <Setter Property="FontWeight" Value="Bold" />
-                          <Setter Property="FontStyle" Value="Normal" />
-                        </Trigger>
-                      </Style.Triggers>
-                    </Style>
-                  </TextBox.Style>
-                </TextBox>
+                         Text="Click to select..." />
 
                 <Button x:Name="PART_ClearButton"
-                        Width="20"
-                        Height="20"
                         Margin="5,0,5,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
+                        Width="20"
+                        Height="20"
                         Background="Transparent"
                         BorderThickness="0"
                         Content="&#x2715;"
@@ -86,39 +70,7 @@
 
               <Button x:Name="PART_BrowseButton"
                       Grid.Column="1"
-                      Width="30"
-                      BorderThickness="0"
-                      Content="..."
-                      Cursor="Hand"
-                      FontWeight="Medium">
-                <Button.Style>
-                  <Style TargetType="Button">
-                    <Setter Property="Background" Value="#F5F5F5" />
-                    <Setter Property="Foreground" Value="#424242" />
-                    <Setter Property="Template">
-                      <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                          <Border Background="{TemplateBinding Background}"
-                                  BorderBrush="#E0E0E0"
-                                  BorderThickness="1,0,0,0"
-                                  CornerRadius="0,0,0,0"
-                                  Padding="8,6">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                          </Border>
-                          <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                              <Setter Property="Background" Value="#EEEEEE" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                              <Setter Property="Background" Value="#E0E0E0" />
-                            </Trigger>
-                          </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                      </Setter.Value>
-                    </Setter>
-                  </Style>
-                </Button.Style>
-              </Button>
+                      Style="{StaticResource BrowseButtonStyle}" />
             </Grid>
           </Border>
         </ControlTemplate>

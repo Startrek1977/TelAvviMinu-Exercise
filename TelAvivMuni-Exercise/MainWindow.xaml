@@ -61,7 +61,8 @@
               <Style TargetType="TextBlock">
                 <Setter Property="Visibility" Value="Hidden" />
                 <Style.Triggers>
-                  <DataTrigger Binding="{Binding SelectedProduct1}" Value="{x:Null}">
+                  <DataTrigger Binding="{Binding SelectedProduct1}"
+                               Value="{x:Null}">
                     <Setter Property="Visibility" Value="Visible" />
                   </DataTrigger>
                 </Style.Triggers>
@@ -123,7 +124,8 @@
               <Style TargetType="TextBlock">
                 <Setter Property="Visibility" Value="Hidden" />
                 <Style.Triggers>
-                  <DataTrigger Binding="{Binding SelectedProduct2}" Value="{x:Null}">
+                  <DataTrigger Binding="{Binding SelectedProduct2}"
+                               Value="{x:Null}">
                     <Setter Property="Visibility" Value="Visible" />
                   </DataTrigger>
                 </Style.Triggers>
