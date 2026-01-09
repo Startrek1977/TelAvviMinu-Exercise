@@ -7,7 +7,7 @@
         Height="400"
         ResizeMode="CanResize"
         ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="Manual"
         Background="White"
         PreviewKeyDown="Window_PreviewKeyDown">
 

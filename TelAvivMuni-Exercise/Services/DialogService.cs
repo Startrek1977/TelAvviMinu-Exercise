@@ -19,12 +19,17 @@ namespace TelAvivMuni_Exercise.Services
 
             var viewModel = new DataBrowserDialogViewModel(items, currentSelection, columns);
 
+            var mainWindow = Application.Current.MainWindow;
             var dialog = new DataBrowserDialog
             {
                 DataContext = viewModel,
                 Title = title,
-                Owner = Application.Current.MainWindow
+                Owner = mainWindow
             };
+
+            // Position dialog to the right of the main window
+            dialog.Left = mainWindow.Left + mainWindow.ActualWidth;
+            dialog.Top = mainWindow.Top;
 
             if (dialog.ShowDialog() == true)
             {
