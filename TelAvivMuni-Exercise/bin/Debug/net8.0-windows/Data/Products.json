@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "Code": "LAP-001",
+    "Name": "Laptop Pro 15",
+    "Category": "Computers",
+    "Price": 1299.99,
+    "Stock": 45
+  },
+  {
+    "Id": 2,
+    "Code": "LAP-002",
+    "Name": "Laptop Air 13",
+    "Category": "Computers",
+    "Price": 999.99,
+    "Stock": 78
+  },
+  {
+    "Id": 3,
+    "Code": "MON-001",
+    "Name": "Ultra Monitor 27",
+    "Category": "Displays",
+    "Price": 449.99,
+    "Stock": 32
+  },
+  {
+    "Id": 4,
+    "Code": "KEY-001",
+    "Name": "Mechanical Keyboard",
+    "Category": "Peripherals",
+    "Price": 149.99,
+    "Stock": 156
+  },
+  {
+    "Id": 5,
+    "Code": "SSD-001",
+    "Name": "Portable SSD 1TB",
+    "Category": "Storage",
+    "Price": 129.99,
+    "Stock": 198
+  }
+]
