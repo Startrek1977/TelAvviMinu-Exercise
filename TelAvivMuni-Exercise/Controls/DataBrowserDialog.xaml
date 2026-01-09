@@ -6,7 +6,56 @@
         Height="400"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
-        ResizeMode="NoResize">
+        ResizeMode="CanResize">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Search Box -->
+        <Border Grid.Row="0" Margin="10,10,10,5" BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="&#x1F50D;" VerticalAlignment="Center" Margin="8,0,5,0" Foreground="Gray" />
+                <TextBox x:Name="SearchTextBox" Grid.Column="1" BorderThickness="0" VerticalContentAlignment="Center" Padding="5" />
+            </Grid>
+        </Border>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="ItemsDataGrid"
+                  Grid.Row="1"
+                  Margin="10,5,10,5"
+                  AutoGenerateColumns="True"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal"
+                  BorderBrush="#CCCCCC"
+                  BorderThickness="1"
+                  RowBackground="White"
+                  AlternatingRowBackground="#F9F9F9">
+        </DataGrid>
+
+        <!-- Items Count -->
+        <TextBlock x:Name="ItemsCountTextBlock"
+                   Grid.Row="2"
+                   Margin="10,5,10,5"
+                   FontSize="11"
+                   Foreground="Gray"
+                   Text="0 items" />
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,5,10,10">
+            <Button x:Name="CancelButton" Content="Cancel" Width="75" Height="25" Margin="0,0,10,0" Click="OnCancelClick" />
+            <Button x:Name="OkButton" Content="OK" Width="75" Height="25" IsDefault="True" Click="OnOkClick" />
+        </StackPanel>
     </Grid>
 </Window>

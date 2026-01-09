@@ -97,7 +97,12 @@ namespace TelAvivMuni_Exercise.Controls
                 Title = DialogTitle ?? "Select Product"
             };
 
-            dialog.ShowDialog();
+            dialog.SetItemsSource(ItemsSource);
+
+            if (dialog.ShowDialog() == true && dialog.SelectedItem != null)
+            {
+                SelectedItem = dialog.SelectedItem;
+            }
         }
     }
 }
