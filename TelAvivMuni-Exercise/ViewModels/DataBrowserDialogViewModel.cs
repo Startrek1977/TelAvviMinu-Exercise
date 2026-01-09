@@ -6,6 +6,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TelAvivMuni_Exercise.Infrastructure;
+using TelAvivMuni_Exercise.Models;
 
 namespace TelAvivMuni_Exercise.ViewModels
 {
@@ -13,6 +14,7 @@ namespace TelAvivMuni_Exercise.ViewModels
     {
         private readonly ObservableCollection<object> _items;
         private readonly ICollectionView _filteredItems;
+        private readonly ObservableCollection<BrowserColumn>? _columns;
 
         private string _searchText = string.Empty;
         public string SearchText
@@ -30,6 +32,10 @@ namespace TelAvivMuni_Exercise.ViewModels
         }
 
         public bool HasSearchText => !string.IsNullOrWhiteSpace(SearchText);
+
+        public ObservableCollection<BrowserColumn>? Columns => _columns;
+
+        public bool HasCustomColumns => _columns != null && _columns.Count > 0;
 
         private object? _selectedItem;
         public object? SelectedItem
@@ -64,9 +70,10 @@ namespace TelAvivMuni_Exercise.ViewModels
         private ICommand? _clearSearchCommand;
         public ICommand ClearSearchCommand => _clearSearchCommand ??= new RelayCommand(OnClearSearch);
 
-        public DataBrowserDialogViewModel(IEnumerable items, object? currentSelection)
+        public DataBrowserDialogViewModel(IEnumerable items, object? currentSelection, ObservableCollection<BrowserColumn>? columns = null)
         {
             _items = new ObservableCollection<object>();
+            _columns = columns;
 
             if (items != null)
             {
@@ -79,7 +86,18 @@ namespace TelAvivMuni_Exercise.ViewModels
             _filteredItems = CollectionViewSource.GetDefaultView(_items);
             _filteredItems.Filter = FilterItems;
 
-            SelectedItem = currentSelection;
+            // Set the selected item - it should match by reference with items in the collection
+            if (currentSelection != null)
+            {
+                // Find the matching item by reference
+                var matchedItem = _items.FirstOrDefault(item => ReferenceEquals(item, currentSelection));
+                if (matchedItem != null)
+                {
+                    SelectedItem = matchedItem;
+                    // Also move the current item in the collection view
+                    _filteredItems.MoveCurrentTo(matchedItem);
+                }
+            }
         }
 
         private bool FilterItems(object item)

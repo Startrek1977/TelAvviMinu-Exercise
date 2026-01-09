@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using TelAvivMuni_Exercise.Models;
 using TelAvivMuni_Exercise.Services;
 
 namespace TelAvivMuni_Exercise.Controls
@@ -25,6 +27,10 @@ namespace TelAvivMuni_Exercise.Controls
 
         public static readonly DependencyProperty DialogServiceProperty =
             DependencyProperty.Register(nameof(DialogService), typeof(IDialogService), typeof(DataBrowserBox),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty ColumnsProperty =
+            DependencyProperty.Register(nameof(Columns), typeof(ObservableCollection<BrowserColumn>), typeof(DataBrowserBox),
                 new PropertyMetadata(null));
 
         public static readonly RoutedEvent SelectionChangedEvent =
@@ -76,8 +82,19 @@ namespace TelAvivMuni_Exercise.Controls
             set => SetValue(DialogServiceProperty, value);
         }
 
+        public ObservableCollection<BrowserColumn> Columns
+        {
+            get => (ObservableCollection<BrowserColumn>)GetValue(ColumnsProperty);
+            set => SetValue(ColumnsProperty, value);
+        }
+
         private Button? _browseButton;
         private TextBox? _textBox;
+
+        public DataBrowserBox()
+        {
+            Columns = new ObservableCollection<BrowserColumn>();
+        }
 
         static DataBrowserBox()
         {
@@ -117,7 +134,7 @@ namespace TelAvivMuni_Exercise.Controls
             }
 
             var title = DialogTitle ?? "Select Item";
-            var result = DialogService.ShowBrowseDialog(ItemsSource, title, SelectedItem);
+            var result = DialogService.ShowBrowseDialog(ItemsSource, title, SelectedItem, Columns);
 
             if (result != null)
             {

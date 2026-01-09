@@ -1,9 +1,9 @@
 ﻿<Window x:Class="TelAvivMuni_Exercise.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:TelAvivMuni_Exercise"
-        xmlns:vm="clr-namespace:TelAvivMuni_Exercise.ViewModels"
         xmlns:controls="clr-namespace:TelAvivMuni_Exercise.Controls"
+        xmlns:local="clr-namespace:TelAvivMuni_Exercise.Models"
+        xmlns:vm="clr-namespace:TelAvivMuni_Exercise.ViewModels"
         Title="Tel-Aviv Muni - Exercise"
         Width="520"
         Height="430">
@@ -44,12 +44,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock VerticalAlignment="Center"
                        Text="Product:" />
-            <controls:DataBrowserBox Grid.Column="1" Height="30"
-                                       ItemsSource="{Binding Products}"
-                                       SelectedItem="{Binding SelectedProduct1, Mode=TwoWay}"
-                                       DisplayMemberPath="Name"
-                                       DialogTitle="בחר מוצר"
-                                       DialogService="{StaticResource DialogService}" />
+            <controls:DataBrowserBox Grid.Column="1"
+                                     Height="30"
+                                     DialogService="{StaticResource DialogService}"
+                                     DialogTitle="בחר מוצר"
+                                     DisplayMemberPath="Name"
+                                     ItemsSource="{Binding Products}"
+                                     SelectedItem="{Binding SelectedProduct1, Mode=TwoWay}" />
           </Grid>
 
           <TextBlock Margin="60,5,0,0"
@@ -80,12 +81,27 @@
             </Grid.ColumnDefinitions>
             <TextBlock VerticalAlignment="Center"
                        Text="Product:" />
-            <controls:DataBrowserBox Grid.Column="1" Height="30"
-                                       ItemsSource="{Binding Products}"
-                                       SelectedItem="{Binding SelectedProduct2, Mode=TwoWay}"
-                                       DisplayMemberPath="Name"
-                                       DialogTitle="בחר מוצר"
-                                       DialogService="{StaticResource DialogService}" />
+            <controls:DataBrowserBox Grid.Column="1"
+                                     Height="30"
+                                     DialogService="{StaticResource DialogService}"
+                                     DialogTitle="בחר מוצר"
+                                     DisplayMemberPath="Name"
+                                     ItemsSource="{Binding Products}"
+                                     SelectedItem="{Binding SelectedProduct2, Mode=TwoWay}">
+              <controls:DataBrowserBox.Columns>
+                <local:BrowserColumn Width="200"
+                                     DataField="Name"
+                                     Header="שם מוצר" />
+                <local:BrowserColumn Width="100"
+                                     HorizontalAlignment="Right"
+                                     DataField="Price"
+                                     Format="C2"
+                                     Header="מחיר" />
+                <local:BrowserColumn Width="150"
+                                     DataField="Category"
+                                     Header="קטגוריה" />
+              </controls:DataBrowserBox.Columns>
+            </controls:DataBrowserBox>
           </Grid>
 
           <TextBlock Margin="60,5,0,0"

@@ -143,9 +143,11 @@
     </Border>
 
     <!--  DataGrid  -->
-    <DataGrid Grid.Row="1"
+    <DataGrid x:Name="ProductsDataGrid"
+              Grid.Row="1"
               Margin="12,0,12,8"
-              AutoGenerateColumns="False"
+              AutoGenerateColumns="True"
+              AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"
               Background="White"
               BorderBrush="#E0E0E0"
               BorderThickness="1"
@@ -157,6 +159,7 @@
               HeadersVisibility="Column"
               HorizontalGridLinesBrush="#F5F5F5"
               IsReadOnly="True"
+              IsSynchronizedWithCurrentItem="True"
               ItemsSource="{Binding FilteredItems}"
               RowBackground="White"
               RowHeight="36"
@@ -216,30 +219,6 @@
           </Style.Triggers>
         </Style>
       </DataGrid.RowStyle>
-      <DataGrid.Columns>
-        <DataGridTextColumn Width="50"
-                            Binding="{Binding Id}"
-                            Header="Id" />
-        <DataGridTextColumn Width="90"
-                            Binding="{Binding Code}"
-                            Header="Code" />
-        <DataGridTextColumn Width="*"
-                            MinWidth="120"
-                            Binding="{Binding Name}"
-                            Header="Name" />
-        <DataGridTextColumn Width="110"
-                            Binding="{Binding Category}"
-                            Header="Category" />
-        <DataGridTextColumn Width="80"
-                            Binding="{Binding Price}"
-                            Header="Price">
-          <DataGridTextColumn.ElementStyle>
-            <Style TargetType="TextBlock">
-              <Setter Property="HorizontalAlignment" Value="Right" />
-            </Style>
-          </DataGridTextColumn.ElementStyle>
-        </DataGridTextColumn>
-      </DataGrid.Columns>
     </DataGrid>
 
     <!--  Items Count  -->

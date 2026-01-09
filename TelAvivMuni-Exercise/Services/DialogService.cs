@@ -1,13 +1,15 @@
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Windows;
 using TelAvivMuni_Exercise.Controls;
+using TelAvivMuni_Exercise.Models;
 using TelAvivMuni_Exercise.ViewModels;
 
 namespace TelAvivMuni_Exercise.Services
 {
     public class DialogService : IDialogService
     {
-        public object? ShowBrowseDialog(IEnumerable items, string title, object? currentSelection)
+        public object? ShowBrowseDialog(IEnumerable items, string title, object? currentSelection, ObservableCollection<BrowserColumn>? columns = null)
         {
             if (items == null)
             {
@@ -15,7 +17,7 @@ namespace TelAvivMuni_Exercise.Services
                 return currentSelection;
             }
 
-            var viewModel = new DataBrowserDialogViewModel(items, currentSelection);
+            var viewModel = new DataBrowserDialogViewModel(items, currentSelection, columns);
 
             var dialog = new DataBrowserDialog
             {
