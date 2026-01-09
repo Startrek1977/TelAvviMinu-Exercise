@@ -36,19 +36,42 @@ namespace TelAvivMuni_Exercise.ViewModels
 
         private void LoadProducts()
         {
-            var jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Products.json");
-            if (File.Exists(jsonPath))
+            try
             {
+                var jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Products.json");
+                if (!File.Exists(jsonPath))
+                {
+                    Products = new ObservableCollection<Product>();
+                    return;
+                }
+
                 var json = File.ReadAllText(jsonPath);
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    Products = new ObservableCollection<Product>();
+                    return;
+                }
+
                 var products = JsonSerializer.Deserialize<List<Product>>(json, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
 
-                if (products != null)
-                {
-                    Products = new ObservableCollection<Product>(products);
-                }
+                Products = products != null && products.Count > 0
+                    ? new ObservableCollection<Product>(products)
+                    : new ObservableCollection<Product>();
+            }
+            catch (JsonException)
+            {
+                Products = new ObservableCollection<Product>();
+            }
+            catch (IOException)
+            {
+                Products = new ObservableCollection<Product>();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Products = new ObservableCollection<Product>();
             }
         }
     }

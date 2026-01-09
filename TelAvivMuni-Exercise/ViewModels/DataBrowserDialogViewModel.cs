@@ -24,9 +24,12 @@ namespace TelAvivMuni_Exercise.ViewModels
                 {
                     _filteredItems.Refresh();
                     OnPropertyChanged(nameof(ItemsCount));
+                    OnPropertyChanged(nameof(HasSearchText));
                 }
             }
         }
+
+        public bool HasSearchText => !string.IsNullOrWhiteSpace(SearchText);
 
         private object? _selectedItem;
         public object? SelectedItem
@@ -58,12 +61,19 @@ namespace TelAvivMuni_Exercise.ViewModels
         private ICommand? _cancelCommand;
         public ICommand CancelCommand => _cancelCommand ??= new RelayCommand(OnCancel);
 
+        private ICommand? _clearSearchCommand;
+        public ICommand ClearSearchCommand => _clearSearchCommand ??= new RelayCommand(OnClearSearch);
+
         public DataBrowserDialogViewModel(IEnumerable items, object? currentSelection)
         {
             _items = new ObservableCollection<object>();
-            foreach (var item in items)
+
+            if (items != null)
             {
-                _items.Add(item);
+                foreach (var item in items)
+                {
+                    _items.Add(item);
+                }
             }
 
             _filteredItems = CollectionViewSource.GetDefaultView(_items);
@@ -103,6 +113,11 @@ namespace TelAvivMuni_Exercise.ViewModels
         private void OnCancel()
         {
             DialogResult = false;
+        }
+
+        private void OnClearSearch()
+        {
+            SearchText = string.Empty;
         }
     }
 }

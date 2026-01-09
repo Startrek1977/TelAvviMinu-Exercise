@@ -9,6 +9,12 @@ namespace TelAvivMuni_Exercise.Services
     {
         public object? ShowBrowseDialog(IEnumerable items, string title, object? currentSelection)
         {
+            if (items == null)
+            {
+                MessageBox.Show("No items available to display.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                return currentSelection;
+            }
+
             var viewModel = new DataBrowserDialogViewModel(items, currentSelection);
 
             var dialog = new DataBrowserDialog

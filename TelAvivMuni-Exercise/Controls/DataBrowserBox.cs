@@ -110,6 +110,12 @@ namespace TelAvivMuni_Exercise.Controls
             if (DialogService == null)
                 return;
 
+            if (ItemsSource == null)
+            {
+                MessageBox.Show("No items available to browse.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             var title = DialogTitle ?? "Select Item";
             var result = DialogService.ShowBrowseDialog(ItemsSource, title, SelectedItem);
 
