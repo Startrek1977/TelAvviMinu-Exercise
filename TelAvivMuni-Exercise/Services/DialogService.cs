@@ -17,9 +17,10 @@ namespace TelAvivMuni_Exercise.Services
                 return currentSelection;
             }
 
-            var viewModel = new DataBrowserDialogViewModel(items, currentSelection, columns);
-
             var mainWindow = Application.Current.MainWindow;
+
+            // Create fresh instances each time (simple, no state leakage, GC handles cleanup)
+            var viewModel = new DataBrowserDialogViewModel(items, currentSelection, columns);
             var dialog = new DataBrowserDialog
             {
                 DataContext = viewModel,

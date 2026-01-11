@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,160 +11,22 @@ namespace TelAvivMuni_Exercise.Controls
     /// </summary>
     public partial class DataBrowserDialog : Window
     {
-        /// <summary>
-        /// Flag to prevent circular updates between DataGrid and ViewModel when programmatically updating selection.
-        /// </summary>
-        private bool _isUpdatingSelection = false;
-
         public DataBrowserDialog()
         {
             InitializeComponent();
-            DataContextChanged += OnDataContextChanged;
-            Loaded += OnLoaded;
-            Closed += OnClosed;
+            ContentRendered += OnContentRendered;
         }
 
         /// <summary>
-        /// Handles the Closed event to clean up event subscriptions and prevent memory leaks.
-        /// This ensures the window can be properly garbage collected.
+        /// Handles the ContentRendered event to apply the pending selection.
+        /// ContentRendered fires after the window content is fully rendered,
+        /// ensuring the DataGrid is ready to display the selection properly.
         /// </summary>
-        private void OnClosed(object? sender, EventArgs e)
+        private void OnContentRendered(object? sender, EventArgs e)
         {
-            // Unsubscribe from all events to prevent memory leaks
-            DataContextChanged -= OnDataContextChanged;
-            Loaded -= OnLoaded;
-            Closed -= OnClosed;
-
-            // Unsubscribe from ViewModel events
             if (DataContext is DataBrowserDialogViewModel viewModel)
             {
-                viewModel.PropertyChanged -= OnViewModelPropertyChanged;
-            }
-        }
-
-        /// <summary>
-        /// Synchronizes the DataGrid's selected item with the ViewModel's SelectedItem property.
-        /// This method uses a workaround to force the DataGrid to update its selection by temporarily
-        /// clearing it before setting it again, which ensures the item is properly highlighted and scrolled into view.
-        /// </summary>
-        /// <param name="selectedItem">The item to select in the DataGrid</param>
-        private void SynchronizeDataGridSelection(object selectedItem)
-        {
-            if (selectedItem == null)
-                return;
-
-            // Set flag to prevent SelectionChanged event from updating the ViewModel
-            _isUpdatingSelection = true;
-            try
-            {
-                // Update the collection view's current item
-                if (DataContext is DataBrowserDialogViewModel viewModel)
-                {
-                    viewModel.FilteredItems.MoveCurrentTo(selectedItem);
-                }
-
-                // Force DataGrid to refresh selection by clearing and resetting
-                // This workaround ensures proper highlighting and scrolling
-                ProductsDataGrid.SelectedItem = null;
-                ProductsDataGrid.UpdateLayout();
-                ProductsDataGrid.SelectedItem = selectedItem;
-                ProductsDataGrid.ScrollIntoView(selectedItem);
-            }
-            finally
-            {
-                // Always restore flag to allow future user selections
-                _isUpdatingSelection = false;
-            }
-        }
-
-        /// <summary>
-        /// Handles the Loaded event to ensure the initially selected item is properly displayed when the dialog opens.
-        /// Uses Dispatcher.BeginInvoke with ContextIdle priority to ensure DataGrid is fully rendered before selection.
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            // Ensure the selected item is scrolled into view when the dialog opens
-            if (DataContext is DataBrowserDialogViewModel viewModel && viewModel.SelectedItem != null)
-            {
-                var selectedItem = viewModel.SelectedItem;
-
-                // Dispatcher is needed here because the Loaded event fires before the DataGrid
-                // has fully rendered and virtualized its items. Without ContextIdle priority,
-                // ScrollIntoView may fail because the visual tree is not yet complete.
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    SynchronizeDataGridSelection(selectedItem);
-                    ProductsDataGrid.Focus();
-                }), System.Windows.Threading.DispatcherPriority.ContextIdle);
-            }
-        }
-
-        /// <summary>
-        /// Handles DataContext changes to subscribe/unsubscribe from ViewModel PropertyChanged events.
-        /// </summary>
-        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            // Unsubscribe from the old ViewModel's PropertyChanged event to prevent memory leaks
-            if (e.OldValue is DataBrowserDialogViewModel oldViewModel)
-            {
-                oldViewModel.PropertyChanged -= OnViewModelPropertyChanged;
-            }
-
-            // Subscribe to the new ViewModel's PropertyChanged event
-            if (e.NewValue is DataBrowserDialogViewModel newViewModel)
-            {
-                newViewModel.PropertyChanged += OnViewModelPropertyChanged;
-            }
-        }
-
-        /// <summary>
-        /// Handles ViewModel property changes to synchronize UI state with the ViewModel.
-        /// Specifically handles SearchText changes to preserve selection when filtering.
-        /// DialogResult handling is now done via DialogCloseBehavior.
-        /// </summary>
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            // Handle SearchText changes to preserve selection when filtering
-            if (e.PropertyName == nameof(DataBrowserDialogViewModel.SearchText))
-            {
-                // When search text changes, preserve the DataGrid selection if it's still visible
-                if (DataContext is DataBrowserDialogViewModel viewModel && viewModel.SelectedItem != null)
-                {
-                    var selectedItem = viewModel.SelectedItem;
-
-                    // Check if the selected item is still visible in the filtered collection
-                    bool isInFilteredCollection = viewModel.FilteredItems.Cast<object>().Contains(selectedItem);
-
-                    if (isInFilteredCollection)
-                    {
-                        try
-                        {
-                            SynchronizeDataGridSelection(selectedItem);
-                        }
-                        catch
-                        {
-                            // Ignore scroll errors if item is not yet in the visual tree
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Handles DataGrid SelectionChanged events to update the ViewModel when the user manually selects an item.
-        /// Ignores selection changes triggered programmatically by SynchronizeDataGridSelection.
-        /// </summary>
-        private void ProductsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // Don't update ViewModel if we're programmatically updating the selection
-            // to prevent circular updates
-            if (_isUpdatingSelection)
-                return;
-
-            // Update the ViewModel when user manually selects an item from the DataGrid
-            if (DataContext is DataBrowserDialogViewModel viewModel && e.AddedItems.Count > 0)
-            {
-                viewModel.SelectedItem = e.AddedItems[0];
+                viewModel.ApplyPendingSelection();
             }
         }
 
