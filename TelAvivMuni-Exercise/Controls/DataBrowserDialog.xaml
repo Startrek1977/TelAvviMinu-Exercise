@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:TelAvivMuni_Exercise.ViewModels"
+        xmlns:behaviors="clr-namespace:TelAvivMuni_Exercise.Infrastructure.Behaviors"
         Title="Select Product"
         Width="520"
         Height="400"
@@ -9,7 +10,9 @@
         ShowInTaskbar="False"
         WindowStartupLocation="Manual"
         Background="White"
-        PreviewKeyDown="Window_PreviewKeyDown">
+        behaviors:DialogCloseBehavior.DialogResult="{Binding DialogResult}"
+        behaviors:AutoFocusSearchBehavior.TargetTextBox="{Binding ElementName=SearchTextBox}"
+        behaviors:AutoFocusSearchBehavior.EscapeCommand="{Binding CancelCommand}">
 
   <Grid Margin="0">
     <Grid.RowDefinitions>
@@ -48,7 +51,7 @@
                  Background="Transparent"
                  BorderThickness="0"
                  FontSize="13"
-                 KeyDown="SearchTextBox_KeyDown"
+                 behaviors:EscapeClearBehavior.IsEnabled="True"
                  Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
         <Button Grid.Column="2"
                 Width="20"
@@ -114,7 +117,7 @@
               ScrollViewer.VerticalScrollBarVisibility="Auto"
               SelectionMode="Single"
               SelectionChanged="ProductsDataGrid_SelectionChanged"
-              PreviewKeyDown="ProductsDataGrid_PreviewKeyDown"
+              behaviors:DataGridEnterBehavior.EnterCommand="{Binding OkCommand}"
               ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
               CellStyle="{StaticResource DataGridCellStyle}"
               RowStyle="{StaticResource DataGridRowStyle}">
