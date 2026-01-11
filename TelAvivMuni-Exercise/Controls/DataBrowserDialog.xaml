@@ -118,6 +118,7 @@
               ScrollViewer.VerticalScrollBarVisibility="Auto"
               SelectionMode="Single"
               behaviors:DataGridEnterBehavior.EnterCommand="{Binding OkCommand}"
+              behaviors:DataGridScrollIntoViewBehavior.ScrollIntoViewItem="{Binding SelectedItem}"
               ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
               CellStyle="{StaticResource DataGridCellStyle}"
               RowStyle="{StaticResource DataGridRowStyle}">

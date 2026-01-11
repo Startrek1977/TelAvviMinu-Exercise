@@ -67,6 +67,7 @@ TelAvivMuni-Exercise/
 │   └── Behaviors/                 # WPF Attached Behaviors (MVVM pattern)
 │       ├── AutoFocusSearchBehavior.cs    # Auto-focus on typing
 │       ├── DataGridEnterBehavior.cs      # Handle Enter key in DataGrid
+│       ├── DataGridScrollIntoViewBehavior.cs # Scroll to selected item
 │       ├── DialogCloseBehavior.cs        # MVVM-friendly dialog closing
 │       └── EscapeClearBehavior.cs        # Clear text on Escape key
 ├── Models/
@@ -229,8 +230,9 @@ Or simply press F5 in Visual Studio.
 #### Implemented Behaviors:
 1. **AutoFocusSearchBehavior** - Automatically focuses search box when typing starts anywhere in the dialog
 2. **DataGridEnterBehavior** - Executes a command when Enter key is pressed in DataGrid
-3. **DialogCloseBehavior** - Closes window when ViewModel's DialogResult changes (MVVM-friendly)
-4. **EscapeClearBehavior** - Clears TextBox content when Escape key is pressed
+3. **DataGridScrollIntoViewBehavior** - Scrolls DataGrid to show the selected item when selection changes
+4. **DialogCloseBehavior** - Closes window when ViewModel's DialogResult changes (MVVM-friendly)
+5. **EscapeClearBehavior** - Clears TextBox content when Escape key is pressed
 
 ### Custom Control vs UserControl
 - Chose Custom Control for better reusability
@@ -256,6 +258,7 @@ Or simply press F5 in Visual Studio.
 - Pending selection stored in ViewModel until view is ready (`ApplyPendingSelection()`)
 - Two-way XAML binding between DataGrid.SelectedItem and ViewModel.SelectedItem
 - `ICollectionView.MoveCurrentTo()` synchronizes the collection view's current item
+- `DataGridScrollIntoViewBehavior` scrolls to selected item (MVVM-friendly, no code-behind)
 - Clean separation: ViewModel stores pending selection, View triggers application after render
 
 ### Keyboard Interaction (via Attached Behaviors)
