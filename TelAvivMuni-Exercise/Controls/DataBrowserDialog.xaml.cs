@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,6 +8,7 @@ namespace TelAvivMuni_Exercise.Controls
 {
     /// <summary>
     /// Dialog window for browsing and selecting items from a collection with filtering support.
+    /// Uses attached behaviors for keyboard handling and dialog closing (MVVM pattern).
     /// </summary>
     public partial class DataBrowserDialog : Window
     {
@@ -120,20 +120,13 @@ namespace TelAvivMuni_Exercise.Controls
 
         /// <summary>
         /// Handles ViewModel property changes to synchronize UI state with the ViewModel.
-        /// Specifically handles DialogResult changes and SearchText changes.
+        /// Specifically handles SearchText changes to preserve selection when filtering.
+        /// DialogResult handling is now done via DialogCloseBehavior.
         /// </summary>
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            // Handle DialogResult changes to close the dialog
-            if (e.PropertyName == nameof(DataBrowserDialogViewModel.DialogResult))
-            {
-                if (DataContext is DataBrowserDialogViewModel viewModel && viewModel.DialogResult.HasValue)
-                {
-                    DialogResult = viewModel.DialogResult;
-                }
-            }
             // Handle SearchText changes to preserve selection when filtering
-            else if (e.PropertyName == nameof(DataBrowserDialogViewModel.SearchText))
+            if (e.PropertyName == nameof(DataBrowserDialogViewModel.SearchText))
             {
                 // When search text changes, preserve the DataGrid selection if it's still visible
                 if (DataContext is DataBrowserDialogViewModel viewModel && viewModel.SelectedItem != null)
@@ -173,83 +166,6 @@ namespace TelAvivMuni_Exercise.Controls
             if (DataContext is DataBrowserDialogViewModel viewModel && e.AddedItems.Count > 0)
             {
                 viewModel.SelectedItem = e.AddedItems[0];
-            }
-        }
-
-        /// <summary>
-        /// Handles PreviewKeyDown events at the Window level to automatically focus the search textbox
-        /// when the user starts typing. This provides a convenient "type-to-search" experience.
-        /// Also handles Escape key to close the dialog (cancel action).
-        /// </summary>
-        private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            // Handle Escape key to close the dialog (invoke Cancel command)
-            // Don't handle if search box has focus - it clears the filter in that case
-            if (e.Key == System.Windows.Input.Key.Escape && !SearchTextBox.IsFocused)
-            {
-                if (DataContext is DataBrowserDialogViewModel viewModel)
-                {
-                    if (viewModel.CancelCommand.CanExecute(null))
-                    {
-                        viewModel.CancelCommand.Execute(null);
-                        e.Handled = true;
-                    }
-                }
-                return;
-            }
-
-            // Only handle text input keys (letters, numbers, space)
-            // Don't interfere with navigation keys, function keys, etc.
-            if ((e.Key >= System.Windows.Input.Key.A && e.Key <= System.Windows.Input.Key.Z) ||
-                (e.Key >= System.Windows.Input.Key.D0 && e.Key <= System.Windows.Input.Key.D9) ||
-                (e.Key >= System.Windows.Input.Key.NumPad0 && e.Key <= System.Windows.Input.Key.NumPad9) ||
-                e.Key == System.Windows.Input.Key.Space)
-            {
-                // Only focus search box if it's not already focused
-                if (!SearchTextBox.IsFocused)
-                {
-                    SearchTextBox.Focus();
-                    // Let the event continue so the character is typed in the search box
-                }
-            }
-        }
-
-        /// <summary>
-        /// Handles KeyDown events in the search textbox.
-        /// Clears the search text when Escape key is pressed.
-        /// </summary>
-        private void SearchTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            // Clear the search text when Escape key is pressed
-            if (e.Key == System.Windows.Input.Key.Escape)
-            {
-                if (DataContext is DataBrowserDialogViewModel viewModel)
-                {
-                    viewModel.SearchText = string.Empty;
-                }
-                // Mark event as handled to prevent further processing
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Handles PreviewKeyDown events in the DataGrid to prevent Enter key from navigating rows.
-        /// Instead, Enter should activate the OK button (if enabled) by invoking its command.
-        /// </summary>
-        private void ProductsDataGrid_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            // When Enter is pressed in the DataGrid, invoke the OK command instead of navigating rows
-            if (e.Key == System.Windows.Input.Key.Return || e.Key == System.Windows.Input.Key.Enter)
-            {
-                if (DataContext is DataBrowserDialogViewModel viewModel)
-                {
-                    // Only execute if the command can execute (OK button is enabled)
-                    if (viewModel.OkCommand.CanExecute(null))
-                    {
-                        viewModel.OkCommand.Execute(null);
-                        e.Handled = true;
-                    }
-                }
             }
         }
 
