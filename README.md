@@ -20,6 +20,7 @@ This project is a home exercise created as part of an interview for the Software
 
 ### Browse Dialog
 - **Modern Design** - Clean, professional interface with Material Design-inspired colors
+- **MVVM Architecture** - Pure MVVM implementation using WPF Attached Behaviors
 - **Vector Search Icon** - Clean magnifying glass icon using SVG path for crisp rendering at any size
 - **Search & Filter** - Real-time search across all item properties
 - **Clear Filter Button** - Appears when search text is entered, clears with one click
@@ -31,6 +32,7 @@ This project is a home exercise created as part of an interview for the Software
 - **Row Hover Effects** - Visual feedback on mouse over
 - **Item Counter** - Displays total filtered items count
 - **Responsive Design** - Resizable dialog with proper scrolling
+- **Keyboard Navigation** - Type to search, Enter to select, Escape to clear/cancel
 
 ### Error Handling
 - **File Not Found** - Gracefully handles missing Products.json file
@@ -61,6 +63,12 @@ TelAvivMuni-Exercise/
 ├── Services/
 │   ├── IDialogService.cs          # Dialog service interface
 │   └── DialogService.cs           # Dialog service implementation
+├── Infrastructure/
+│   └── Behaviors/                 # WPF Attached Behaviors (MVVM pattern)
+│       ├── AutoFocusSearchBehavior.cs    # Auto-focus on typing
+│       ├── DataGridEnterBehavior.cs      # Handle Enter key in DataGrid
+│       ├── DialogCloseBehavior.cs        # MVVM-friendly dialog closing
+│       └── EscapeClearBehavior.cs        # Clear text on Escape key
 ├── Models/
 │   ├── Product.cs                 # Product data model
 │   └── BrowserColumn.cs           # Column configuration model
@@ -211,11 +219,18 @@ Or simply press F5 in Visual Studio.
 
 ## Design Decisions
 
-### MVVM Pattern
-- Clean separation of concerns
-- Testable business logic
-- Reusable ViewModels
-- Proper data binding
+### MVVM Pattern with Attached Behaviors
+- **Pure MVVM Implementation** - No code-behind event handlers for UI logic
+- **Attached Behaviors** - Reusable, declarative UI behaviors defined in XAML
+- **Clean Separation** - View logic separated from business logic
+- **Testable** - Behaviors and ViewModels can be unit tested independently
+- **Reusable** - Behaviors can be applied to any WPF control across the application
+
+#### Implemented Behaviors:
+1. **AutoFocusSearchBehavior** - Automatically focuses search box when typing starts anywhere in the dialog
+2. **DataGridEnterBehavior** - Executes a command when Enter key is pressed in DataGrid
+3. **DialogCloseBehavior** - Closes window when ViewModel's DialogResult changes (MVVM-friendly)
+4. **EscapeClearBehavior** - Clears TextBox content when Escape key is pressed
 
 ### Custom Control vs UserControl
 - Chose Custom Control for better reusability
@@ -246,6 +261,22 @@ Or simply press F5 in Visual Studio.
 - Validates selection before scrolling into view
 - Preserves selection state during filter operations (SearchText changes)
 
+### Keyboard Interaction (via Attached Behaviors)
+- **Type-to-Search** - Start typing anywhere to focus search box automatically
+- **Enter to Select** - Press Enter in DataGrid to select item and close dialog
+- **Escape to Clear** - Press Escape in search box to clear filter text
+- **Escape to Cancel** - Press Escape elsewhere to cancel and close dialog
+- **No Code-Behind** - All keyboard handling implemented via reusable attached behaviors
+
+## Recent Improvements
+
+### MVVM Refactoring (v2.0)
+- **Removed ~80 lines** of keyboard event handling code from code-behind
+- **Added 4 reusable attached behaviors** for declarative UI logic
+- **Improved maintainability** - Behaviors are independently testable and reusable
+- **Better separation of concerns** - View logic moved from code-behind to XAML
+- **Cleaner architecture** - True MVVM pattern with no UI logic in code-behind
+
 ## Future Enhancements
 
 Potential improvements for production use:
@@ -255,7 +286,7 @@ Potential improvements for production use:
 - Add export functionality (CSV, Excel)
 - Multi-selection support (Ctrl+Click, Shift+Click)
 - Custom column templates (images, buttons, checkboxes)
-- Keyboard navigation improvements (Arrow keys, Enter, Escape)
+- Additional behaviors (double-click to select, arrow key navigation)
 - Accessibility features (screen reader support, high contrast themes)
 - Full localization support (resources for all strings)
 - Column reordering (drag-and-drop columns)
