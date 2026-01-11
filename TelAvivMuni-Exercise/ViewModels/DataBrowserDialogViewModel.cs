@@ -18,7 +18,10 @@ namespace TelAvivMuni_Exercise.ViewModels
     {
         private readonly ObservableCollection<object> _items;
         private readonly ICollectionView _filteredItems;
-        private readonly ObservableCollection<BrowserColumn>? _columns;
+        private ObservableCollection<BrowserColumn>? _columns;
+
+        // Stores the pending selection to be applied after the view is fully loaded
+        private object? _pendingSelection;
 
         /// <summary>
         /// Gets or sets the search text used to filter the items collection.
@@ -111,11 +114,32 @@ namespace TelAvivMuni_Exercise.ViewModels
         private ICommand? _clearSearchCommand;
         public ICommand ClearSearchCommand => _clearSearchCommand ??= new RelayCommand(OnClearSearch);
 
-        public DataBrowserDialogViewModel(IEnumerable items, object? currentSelection, ObservableCollection<BrowserColumn>? columns = null)
+        public DataBrowserDialogViewModel()
         {
             _items = new ObservableCollection<object>();
+            _filteredItems = CollectionViewSource.GetDefaultView(_items);
+            _filteredItems.Filter = FilterItems;
+        }
+
+        /// <summary>
+        /// Resets the ViewModel with new data for reuse.
+        /// </summary>
+        /// <param name="items">The collection of items to browse</param>
+        /// <param name="currentSelection">The currently selected item (if any)</param>
+        /// <param name="columns">Optional custom column configurations</param>
+        public void Reset(IEnumerable items, object? currentSelection, ObservableCollection<BrowserColumn>? columns = null)
+        {
+            // Reset state
+            _searchText = string.Empty;
+            OnPropertyChanged(nameof(SearchText));
+            OnPropertyChanged(nameof(HasSearchText));
+
+            _selectedItem = null;
+            _dialogResult = null;
             _columns = columns;
 
+            // Clear and repopulate items
+            _items.Clear();
             if (items != null)
             {
                 foreach (var item in items)
@@ -124,21 +148,17 @@ namespace TelAvivMuni_Exercise.ViewModels
                 }
             }
 
-            _filteredItems = CollectionViewSource.GetDefaultView(_items);
-            _filteredItems.Filter = FilterItems;
+            // Refresh the filter
+            _filteredItems.Refresh();
+            OnPropertyChanged(nameof(ItemsCount));
+            OnPropertyChanged(nameof(Columns));
+            OnPropertyChanged(nameof(HasCustomColumns));
+            OnPropertyChanged(nameof(SelectedItem));
 
-            // Set the selected item - it should match by reference with items in the collection
-            if (currentSelection != null)
-            {
-                // Find the matching item by reference
-                var matchedItem = _items.FirstOrDefault(item => ReferenceEquals(item, currentSelection));
-                if (matchedItem != null)
-                {
-                    SelectedItem = matchedItem;
-                    // Also move the current item in the collection view
-                    _filteredItems.MoveCurrentTo(matchedItem);
-                }
-            }
+            // Store the pending selection to be applied after the view is fully loaded
+            _pendingSelection = currentSelection;
+
+            OkCommand.NotifyCanExecuteChanged();
         }
 
         private bool FilterItems(object item)
@@ -187,6 +207,26 @@ namespace TelAvivMuni_Exercise.ViewModels
         private void OnClearSearch()
         {
             SearchText = string.Empty;
+        }
+
+        /// <summary>
+        /// Applies the pending selection after the view is fully loaded and rendered.
+        /// This ensures the DataGrid properly reflects the selected item with highlighting.
+        /// Should be called from the view's ContentRendered event.
+        /// </summary>
+        public void ApplyPendingSelection()
+        {
+            if (_pendingSelection != null)
+            {
+                // Find the matching item by reference in the current items collection
+                var matchedItem = _items.FirstOrDefault(item => ReferenceEquals(item, _pendingSelection));
+                if (matchedItem != null)
+                {
+                    SelectedItem = matchedItem;
+                    _filteredItems.MoveCurrentTo(matchedItem);
+                }
+                _pendingSelection = null;
+            }
         }
     }
 }

@@ -252,14 +252,11 @@ Or simply press F5 in Visual Studio.
 - Silent fallback for missing data files
 
 ### Selection Synchronization
-- Uses `ICollectionView.MoveCurrentTo()` for proper synchronization between ViewModel and DataGrid
-- SelectionChanged event handler updates ViewModel when user selects items
-- Circular update prevention using `_isUpdatingSelection` flag
-- Dispatcher with `ContextIdle` priority ensures UI is fully rendered before selection updates
-- Captures selected item reference before async operations to handle timing issues
-- Forces DataGrid selection refresh by temporarily clearing and re-setting selection
-- Validates selection before scrolling into view
-- Preserves selection state during filter operations (SearchText changes)
+- Uses `ContentRendered` event to apply selection after the view is fully rendered
+- Pending selection stored in ViewModel until view is ready (`ApplyPendingSelection()`)
+- Two-way XAML binding between DataGrid.SelectedItem and ViewModel.SelectedItem
+- `ICollectionView.MoveCurrentTo()` synchronizes the collection view's current item
+- Clean separation: ViewModel stores pending selection, View triggers application after render
 
 ### Keyboard Interaction (via Attached Behaviors)
 - **Type-to-Search** - Start typing anywhere to focus search box automatically
