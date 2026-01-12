@@ -2,6 +2,30 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:TelAvivMuni_Exercise.Controls">
 
+  <!-- Browse Dialog Icon (same as browse button content) -->
+  <DrawingImage x:Key="BrowseDialogIcon">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <GeometryDrawing Brush="Transparent">
+          <GeometryDrawing.Pen>
+            <Pen Brush="White" Thickness="1.5"/>
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 2,1 H 14 A 1,1 0 0 1 15,2 V 5 A 1,1 0 0 1 14,6 H 2 A 1,1 0 0 1 1,5 V 2 A 1,1 0 0 1 2,1 Z M 2,10 H 14 A 1,1 0 0 1 15,11 V 14 A 1,1 0 0 1 14,15 H 2 A 1,1 0 0 1 1,14 V 11 A 1,1 0 0 1 2,10 Z"/>
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing Brush="White">
+          <GeometryDrawing.Geometry>
+            <GeometryGroup>
+              <EllipseGeometry Center="4,3.5" RadiusX="1" RadiusY="1"/>
+              <EllipseGeometry Center="4,12.5" RadiusX="1" RadiusY="1"/>
+            </GeometryGroup>
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+
   <!-- Base Button Style -->
   <Style x:Key="BaseButtonStyle" TargetType="Button">
     <Setter Property="BorderThickness" Value="0" />
@@ -86,7 +110,6 @@
     <Setter Property="Background" Value="#F5F5F5" />
     <Setter Property="Foreground" Value="#424242" />
     <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="Content" Value="..." />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="FontWeight" Value="Medium" />
     <Setter Property="Template">
@@ -96,8 +119,16 @@
                   BorderBrush="#E0E0E0"
                   BorderThickness="1,0,0,0"
                   CornerRadius="0,0,0,0"
-                  Padding="8,6">
-            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                  Padding="3">
+            <Viewbox Width="18" Height="18">
+              <Path Data="M 4,2 H 20 A 2,2 0 0 1 22,4 V 8 A 2,2 0 0 1 20,10 H 4 A 2,2 0 0 1 2,8 V 4 A 2,2 0 0 1 4,2 Z M 4,14 H 20 A 2,2 0 0 1 22,16 V 20 A 2,2 0 0 1 20,22 H 4 A 2,2 0 0 1 2,20 V 16 A 2,2 0 0 1 4,14 Z M 4.5,6 A 1.5,1.5 0 1,0 7.5,6 A 1.5,1.5 0 1,0 4.5,6 M 4.5,18 A 1.5,1.5 0 1,0 7.5,18 A 1.5,1.5 0 1,0 4.5,18"
+                    Stroke="#1976D2"
+                    StrokeThickness="1"
+                    Fill="Transparent"
+                    Width="24"
+                    Height="24"
+                    Stretch="Uniform"/>
+            </Viewbox>
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

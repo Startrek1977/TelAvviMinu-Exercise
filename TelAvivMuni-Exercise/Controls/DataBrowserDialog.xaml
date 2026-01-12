@@ -4,6 +4,7 @@
         xmlns:vm="clr-namespace:TelAvivMuni_Exercise.ViewModels"
         xmlns:behaviors="clr-namespace:TelAvivMuni_Exercise.Infrastructure.Behaviors"
         Title="Select Product"
+        Icon="{StaticResource BrowseDialogIcon}"
         Width="520"
         Height="400"
         ResizeMode="CanResize"
