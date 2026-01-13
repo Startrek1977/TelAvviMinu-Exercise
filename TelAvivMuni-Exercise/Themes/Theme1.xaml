@@ -2,6 +2,71 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:TelAvivMuni_Exercise.Controls">
 
+  <!-- ============================================ -->
+  <!-- Theme1 - Blue Theme Color Palette -->
+  <!--
+    To use this theme, update App.xaml line 10:
+    <ResourceDictionary Source="/Themes/Theme1.xaml" />
+  -->
+  <!-- ============================================ -->
+
+  <!-- Primary Colors (Blue Theme) -->
+  <SolidColorBrush x:Key="PrimaryBrush" Color="#2196F3" />
+  <SolidColorBrush x:Key="PrimaryDarkBrush" Color="#1976D2" />
+  <SolidColorBrush x:Key="PrimaryDarkerBrush" Color="#0D47A1" />
+  <SolidColorBrush x:Key="PrimaryLightBrush" Color="#E3F2FD" />
+
+  <!-- Neutral/Gray Colors -->
+  <SolidColorBrush x:Key="NeutralLightBrush" Color="#F5F5F5" />
+  <SolidColorBrush x:Key="NeutralMediumBrush" Color="#EEEEEE" />
+  <SolidColorBrush x:Key="NeutralDarkBrush" Color="#E0E0E0" />
+  <SolidColorBrush x:Key="NeutralExtraLightBrush" Color="#FAFAFA" />
+  <SolidColorBrush x:Key="NeutralHoverBrush" Color="#F0F0F0" />
+
+  <!-- Border Colors -->
+  <SolidColorBrush x:Key="BorderBrush" Color="#E0E0E0" />
+  <SolidColorBrush x:Key="BorderLightBrush" Color="#CCCCCC" />
+
+  <!-- Text Colors -->
+  <SolidColorBrush x:Key="TextPrimaryBrush" Color="#424242" />
+  <SolidColorBrush x:Key="TextSecondaryBrush" Color="#616161" />
+  <SolidColorBrush x:Key="TextTertiaryBrush" Color="#757575" />
+  <SolidColorBrush x:Key="TextDisabledBrush" Color="#9E9E9E" />
+
+  <!-- Disabled State -->
+  <SolidColorBrush x:Key="DisabledBrush" Color="#BDBDBD" />
+
+  <!-- White -->
+  <SolidColorBrush x:Key="WhiteBrush" Color="White" />
+
+  <!-- ============================================ -->
+  <!-- Theme Resources and Styles -->
+  <!-- ============================================ -->
+
+  <!-- Browse Dialog Icon (same as browse button content) -->
+  <DrawingImage x:Key="BrowseDialogIcon">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <GeometryDrawing Brush="Transparent">
+          <GeometryDrawing.Pen>
+            <Pen Brush="White" Thickness="1.5"/>
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 2,1 H 14 A 1,1 0 0 1 15,2 V 5 A 1,1 0 0 1 14,6 H 2 A 1,1 0 0 1 1,5 V 2 A 1,1 0 0 1 2,1 Z M 2,10 H 14 A 1,1 0 0 1 15,11 V 14 A 1,1 0 0 1 14,15 H 2 A 1,1 0 0 1 1,14 V 11 A 1,1 0 0 1 2,10 Z"/>
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing Brush="White">
+          <GeometryDrawing.Geometry>
+            <GeometryGroup>
+              <EllipseGeometry Center="4,3.5" RadiusX="1" RadiusY="1"/>
+              <EllipseGeometry Center="4,12.5" RadiusX="1" RadiusY="1"/>
+            </GeometryGroup>
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+
   <!-- Base Button Style -->
   <Style x:Key="BaseButtonStyle" TargetType="Button">
     <Setter Property="BorderThickness" Value="0" />
@@ -22,32 +87,32 @@
 
   <!-- Blue Button Style (Primary actions) -->
   <Style x:Key="BlueButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
-    <Setter Property="Background" Value="#2196F3" />
-    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="#1976D2" />
+        <Setter Property="Background" Value="{StaticResource PrimaryDarkBrush}" />
       </Trigger>
       <Trigger Property="IsPressed" Value="True">
-        <Setter Property="Background" Value="#0D47A1" />
+        <Setter Property="Background" Value="{StaticResource PrimaryDarkerBrush}" />
       </Trigger>
       <Trigger Property="IsEnabled" Value="False">
-        <Setter Property="Background" Value="#BDBDBD" />
-        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="{StaticResource DisabledBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
       </Trigger>
     </Style.Triggers>
   </Style>
 
   <!-- Gray Button Style (Secondary actions) -->
   <Style x:Key="GrayButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
-    <Setter Property="Background" Value="#F5F5F5" />
-    <Setter Property="Foreground" Value="#424242" />
+    <Setter Property="Background" Value="{StaticResource NeutralLightBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="#EEEEEE" />
+        <Setter Property="Background" Value="{StaticResource NeutralMediumBrush}" />
       </Trigger>
       <Trigger Property="IsPressed" Value="True">
-        <Setter Property="Background" Value="#E0E0E0" />
+        <Setter Property="Background" Value="{StaticResource NeutralDarkBrush}" />
       </Trigger>
     </Style.Triggers>
   </Style>
@@ -61,7 +126,7 @@
     <Setter Property="Content" Value="&#x2715;" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="FontSize" Value="12" />
-    <Setter Property="Foreground" Value="#9E9E9E" />
+    <Setter Property="Foreground" Value="{StaticResource TextDisabledBrush}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
@@ -72,7 +137,7 @@
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" Value="#F0F0F0" />
+              <Setter Property="Background" Value="{StaticResource NeutralHoverBrush}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -83,28 +148,35 @@
   <!-- Browse Button Style (... button for DataBrowserBox) -->
   <Style x:Key="BrowseButtonStyle" TargetType="Button">
     <Setter Property="Width" Value="30" />
-    <Setter Property="Background" Value="#F5F5F5" />
-    <Setter Property="Foreground" Value="#424242" />
+    <Setter Property="Background" Value="{StaticResource NeutralLightBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
     <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="Content" Value="..." />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="FontWeight" Value="Medium" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
           <Border Background="{TemplateBinding Background}"
-                  BorderBrush="#E0E0E0"
+                  BorderBrush="{StaticResource BorderBrush}"
                   BorderThickness="1,0,0,0"
                   CornerRadius="0,0,0,0"
-                  Padding="8,6">
-            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                  Padding="3">
+            <Viewbox Width="18" Height="18">
+              <Path Data="M 4,2 H 20 A 2,2 0 0 1 22,4 V 8 A 2,2 0 0 1 20,10 H 4 A 2,2 0 0 1 2,8 V 4 A 2,2 0 0 1 4,2 Z M 4,14 H 20 A 2,2 0 0 1 22,16 V 20 A 2,2 0 0 1 20,22 H 4 A 2,2 0 0 1 2,20 V 16 A 2,2 0 0 1 4,14 Z M 4.5,6 A 1.5,1.5 0 1,0 7.5,6 A 1.5,1.5 0 1,0 4.5,6 M 4.5,18 A 1.5,1.5 0 1,0 7.5,18 A 1.5,1.5 0 1,0 4.5,18"
+                    Stroke="{StaticResource PrimaryDarkBrush}"
+                    StrokeThickness="1"
+                    Fill="Transparent"
+                    Width="24"
+                    Height="24"
+                    Stretch="Uniform"/>
+            </Viewbox>
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" Value="#EEEEEE" />
+              <Setter Property="Background" Value="{StaticResource NeutralMediumBrush}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-              <Setter Property="Background" Value="#E0E0E0" />
+              <Setter Property="Background" Value="{StaticResource NeutralDarkBrush}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -133,12 +205,12 @@
 
   <!-- DataGrid Column Header Style -->
   <Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
-    <Setter Property="Background" Value="#FAFAFA" />
-    <Setter Property="Foreground" Value="#616161" />
+    <Setter Property="Background" Value="{StaticResource NeutralExtraLightBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
     <Setter Property="FontWeight" Value="SemiBold" />
     <Setter Property="FontSize" Value="12" />
     <Setter Property="Padding" Value="12,10" />
-    <Setter Property="BorderBrush" Value="#E0E0E0" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
     <Setter Property="BorderThickness" Value="0,0,0,1" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
   </Style>
@@ -148,7 +220,7 @@
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Padding" Value="12,8" />
     <Setter Property="FontSize" Value="13" />
-    <Setter Property="Foreground" Value="#424242" />
+    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="DataGridCell">
@@ -163,8 +235,8 @@
     </Setter>
     <Style.Triggers>
       <Trigger Property="IsSelected" Value="True">
-        <Setter Property="Background" Value="#E3F2FD" />
-        <Setter Property="Foreground" Value="#1976D2" />
+        <Setter Property="Background" Value="{StaticResource PrimaryLightBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryDarkBrush}" />
         <Setter Property="FontWeight" Value="Bold" />
       </Trigger>
     </Style.Triggers>
@@ -172,13 +244,13 @@
 
   <!-- DataGrid Row Style -->
   <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
-    <Setter Property="Background" Value="White" />
+    <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="#F5F5F5" />
+        <Setter Property="Background" Value="{StaticResource NeutralLightBrush}" />
       </Trigger>
       <Trigger Property="IsSelected" Value="True">
-        <Setter Property="Background" Value="#E3F2FD" />
+        <Setter Property="Background" Value="{StaticResource PrimaryLightBrush}" />
       </Trigger>
     </Style.Triggers>
   </Style>
