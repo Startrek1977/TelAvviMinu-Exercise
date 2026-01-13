@@ -26,7 +26,7 @@
     <!--  Search Box  -->
     <Border Grid.Row="0"
             Margin="12,12,12,8"
-            BorderBrush="#E0E0E0"
+            BorderBrush="{StaticResource BorderBrush}"
             BorderThickness="1"
             CornerRadius="2">
       <Grid>
@@ -42,7 +42,7 @@
                  VerticalAlignment="Center">
           <Canvas Width="24" Height="24">
             <Path Data="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-                  Fill="#757575" />
+                  Fill="{StaticResource TextTertiaryBrush}" />
           </Canvas>
         </Viewbox>
         <TextBox x:Name="SearchTextBox"
@@ -64,7 +64,7 @@
                 Content="&#x2715;"
                 Cursor="Hand"
                 FontSize="12"
-                Foreground="#9E9E9E">
+                Foreground="{StaticResource TextDisabledBrush}">
           <Button.Style>
             <Style TargetType="Button">
               <Setter Property="Visibility" Value="Collapsed" />
@@ -77,7 +77,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                       <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#F0F0F0" />
+                        <Setter Property="Background" Value="{StaticResource NeutralHoverBrush}" />
                       </Trigger>
                     </ControlTemplate.Triggers>
                   </ControlTemplate>
@@ -100,8 +100,8 @@
               Margin="12,0,12,8"
               AutoGenerateColumns="True"
               AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"
-              Background="White"
-              BorderBrush="#E0E0E0"
+              Background="{StaticResource WhiteBrush}"
+              BorderBrush="{StaticResource BorderBrush}"
               BorderThickness="1"
               CanUserAddRows="False"
               CanUserDeleteRows="False"
@@ -109,11 +109,11 @@
               CanUserResizeRows="False"
               GridLinesVisibility="Horizontal"
               HeadersVisibility="Column"
-              HorizontalGridLinesBrush="#F5F5F5"
+              HorizontalGridLinesBrush="{StaticResource NeutralLightBrush}"
               IsReadOnly="True"
               ItemsSource="{Binding FilteredItems}"
               SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-              RowBackground="White"
+              RowBackground="{StaticResource WhiteBrush}"
               RowHeight="36"
               ScrollViewer.HorizontalScrollBarVisibility="Auto"
               ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -129,7 +129,7 @@
     <TextBlock Grid.Row="2"
                Margin="12,0,12,8"
                FontSize="11"
-               Foreground="#757575"
+               Foreground="{StaticResource TextTertiaryBrush}"
                Text="{Binding ItemsCount, StringFormat='{}{0} items'}" />
 
     <!--  Buttons  -->

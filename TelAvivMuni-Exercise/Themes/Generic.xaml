@@ -4,8 +4,8 @@
 
   <!--  DataBrowserBox Control Style  -->
   <Style TargetType="{x:Type controls:DataBrowserBox}">
-    <Setter Property="Background" Value="White" />
-    <Setter Property="BorderBrush" Value="#CCCCCC" />
+    <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderLightBrush}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Template">
       <Setter.Value>
@@ -28,7 +28,7 @@
                 <Path Data="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z M3.29 7 L12 12 L20.71 7 M12 22 L12 12"
                       Fill="Transparent"
                       Stretch="Uniform"
-                      Stroke="#1976D2"
+                      Stroke="{StaticResource PrimaryDarkBrush}"
                       StrokeEndLineCap="Round"
                       StrokeLineJoin="Round"
                       StrokeStartLineCap="Round"
@@ -52,7 +52,7 @@
                         Content="&#x2715;"
                         Cursor="Hand"
                         FontSize="12"
-                        Foreground="#9E9E9E">
+                        Foreground="{StaticResource TextDisabledBrush}">
                   <Button.Style>
                     <Style TargetType="Button">
                       <Setter Property="Visibility" Value="Visible" />
@@ -66,7 +66,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                               <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#F0F0F0" />
+                                <Setter Property="Background" Value="{StaticResource NeutralHoverBrush}" />
                               </Trigger>
                             </ControlTemplate.Triggers>
                           </ControlTemplate>

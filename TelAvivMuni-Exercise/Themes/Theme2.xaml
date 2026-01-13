@@ -2,7 +2,52 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:TelAvivMuni_Exercise.Controls">
 
-  <!-- Theme2: Dark Green/Teal Theme with Rounded Corners -->
+  <!-- ============================================ -->
+  <!-- Theme2 - Teal/Green Theme Color Palette -->
+  <!--
+    To use this theme, update App.xaml line 10:
+    <ResourceDictionary Source="/Themes/Theme2.xaml" />
+  -->
+  <!-- ============================================ -->
+
+  <!-- Primary Colors (Teal/Green Theme) -->
+  <SolidColorBrush x:Key="PrimaryBrush" Color="#009688" />
+  <SolidColorBrush x:Key="PrimaryDarkBrush" Color="#00796B" />
+  <SolidColorBrush x:Key="PrimaryDarkerBrush" Color="#00695C" />
+  <SolidColorBrush x:Key="PrimaryLightBrush" Color="#B2DFDB" />
+  <SolidColorBrush x:Key="PrimaryExtraLightBrush" Color="#E0F2F1" />
+
+  <!-- Secondary Colors (Dark Gray) -->
+  <SolidColorBrush x:Key="SecondaryBrush" Color="#455A64" />
+  <SolidColorBrush x:Key="SecondaryDarkBrush" Color="#37474F" />
+  <SolidColorBrush x:Key="SecondaryDarkerBrush" Color="#263238" />
+
+  <!-- Neutral/Gray Colors -->
+  <SolidColorBrush x:Key="NeutralLightBrush" Color="#B0BEC5" />
+  <SolidColorBrush x:Key="NeutralMediumBrush" Color="#78909C" />
+  <SolidColorBrush x:Key="NeutralDarkBrush" Color="#607D8B" />
+  <SolidColorBrush x:Key="NeutralExtraLightBrush" Color="#ECEFF1" />
+  <SolidColorBrush x:Key="NeutralHoverBrush" Color="#E0F2F1" />
+
+  <!-- Border Colors -->
+  <SolidColorBrush x:Key="BorderBrush" Color="#00796B" />
+  <SolidColorBrush x:Key="BorderLightBrush" Color="#B2DFDB" />
+
+  <!-- Text Colors -->
+  <SolidColorBrush x:Key="TextPrimaryBrush" Color="#263238" />
+  <SolidColorBrush x:Key="TextSecondaryBrush" Color="#37474F" />
+  <SolidColorBrush x:Key="TextTertiaryBrush" Color="#607D8B" />
+  <SolidColorBrush x:Key="TextDisabledBrush" Color="#78909C" />
+
+  <!-- Disabled State -->
+  <SolidColorBrush x:Key="DisabledBrush" Color="#B0BEC5" />
+
+  <!-- White -->
+  <SolidColorBrush x:Key="WhiteBrush" Color="White" />
+
+  <!-- ============================================ -->
+  <!-- Theme Resources and Styles -->
+  <!-- ============================================ -->
 
   <!-- Browse Dialog Icon (same as browse button content) -->
   <DrawingImage x:Key="BrowseDialogIcon">
@@ -48,32 +93,32 @@
 
   <!-- Blue Button Style (Primary actions) - Using Teal/Green -->
   <Style x:Key="BlueButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
-    <Setter Property="Background" Value="#009688" />
-    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="#00796B" />
+        <Setter Property="Background" Value="{StaticResource PrimaryDarkBrush}" />
       </Trigger>
       <Trigger Property="IsPressed" Value="True">
-        <Setter Property="Background" Value="#00695C" />
+        <Setter Property="Background" Value="{StaticResource PrimaryDarkerBrush}" />
       </Trigger>
       <Trigger Property="IsEnabled" Value="False">
-        <Setter Property="Background" Value="#B0BEC5" />
-        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="{StaticResource DisabledBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
       </Trigger>
     </Style.Triggers>
   </Style>
 
   <!-- Gray Button Style (Secondary actions) - Using Dark Gray -->
   <Style x:Key="GrayButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
-    <Setter Property="Background" Value="#455A64" />
-    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="#37474F" />
+        <Setter Property="Background" Value="{StaticResource SecondaryDarkBrush}" />
       </Trigger>
       <Trigger Property="IsPressed" Value="True">
-        <Setter Property="Background" Value="#263238" />
+        <Setter Property="Background" Value="{StaticResource SecondaryDarkerBrush}" />
       </Trigger>
     </Style.Triggers>
   </Style>
@@ -87,7 +132,7 @@
     <Setter Property="Content" Value="&#x2715;" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="FontSize" Value="12" />
-    <Setter Property="Foreground" Value="#607D8B" />
+    <Setter Property="Foreground" Value="{StaticResource NeutralDarkBrush}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
@@ -98,8 +143,8 @@
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" Value="#E0F2F1" />
-              <Setter Property="Foreground" Value="#00796B" />
+              <Setter Property="Background" Value="{StaticResource NeutralHoverBrush}" />
+              <Setter Property="Foreground" Value="{StaticResource PrimaryDarkBrush}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -110,8 +155,8 @@
   <!-- Browse Button Style (... button for DataBrowserBox) -->
   <Style x:Key="BrowseButtonStyle" TargetType="Button">
     <Setter Property="Width" Value="35" />
-    <Setter Property="Background" Value="#009688" />
-    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="FontWeight" Value="Bold" />
@@ -120,7 +165,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="Button">
           <Border Background="{TemplateBinding Background}"
-                  BorderBrush="#00796B"
+                  BorderBrush="{StaticResource BorderBrush}"
                   BorderThickness="2,0,0,0"
                   CornerRadius="0,4,4,0"
                   Padding="4">
@@ -136,10 +181,10 @@
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" Value="#00796B" />
+              <Setter Property="Background" Value="{StaticResource PrimaryDarkBrush}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-              <Setter Property="Background" Value="#00695C" />
+              <Setter Property="Background" Value="{StaticResource PrimaryDarkerBrush}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -154,29 +199,29 @@
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="IsReadOnly" Value="True" />
     <Setter Property="Padding" Value="8,0,28,0" />
-    <Setter Property="Foreground" Value="#263238" />
+    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
     <Style.Triggers>
       <Trigger Property="Opacity" Value="0.5">
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="FontStyle" Value="Italic" />
-        <Setter Property="Foreground" Value="#78909C" />
+        <Setter Property="Foreground" Value="{StaticResource TextDisabledBrush}" />
       </Trigger>
       <Trigger Property="Opacity" Value="1">
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="FontStyle" Value="Normal" />
-        <Setter Property="Foreground" Value="#263238" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
       </Trigger>
     </Style.Triggers>
   </Style>
 
   <!-- DataGrid Column Header Style -->
   <Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
-    <Setter Property="Background" Value="#009688" />
-    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
     <Setter Property="FontWeight" Value="Bold" />
     <Setter Property="FontSize" Value="12" />
     <Setter Property="Padding" Value="12,10" />
-    <Setter Property="BorderBrush" Value="#00796B" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
     <Setter Property="BorderThickness" Value="0,0,0,2" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
   </Style>
@@ -186,7 +231,7 @@
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Padding" Value="12,8" />
     <Setter Property="FontSize" Value="13" />
-    <Setter Property="Foreground" Value="#263238" />
+    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="DataGridCell">
@@ -201,8 +246,8 @@
     </Setter>
     <Style.Triggers>
       <Trigger Property="IsSelected" Value="True">
-        <Setter Property="Background" Value="#B2DFDB" />
-        <Setter Property="Foreground" Value="#00695C" />
+        <Setter Property="Background" Value="{StaticResource PrimaryLightBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryDarkerBrush}" />
         <Setter Property="FontWeight" Value="Bold" />
       </Trigger>
     </Style.Triggers>
@@ -210,13 +255,13 @@
 
   <!-- DataGrid Row Style -->
   <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
-    <Setter Property="Background" Value="White" />
+    <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="#E0F2F1" />
+        <Setter Property="Background" Value="{StaticResource PrimaryExtraLightBrush}" />
       </Trigger>
       <Trigger Property="IsSelected" Value="True">
-        <Setter Property="Background" Value="#B2DFDB" />
+        <Setter Property="Background" Value="{StaticResource PrimaryLightBrush}" />
       </Trigger>
     </Style.Triggers>
   </Style>
