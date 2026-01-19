@@ -49,6 +49,8 @@ This project is a home exercise created as part of an interview for the Software
 - **Libraries:**
   - CommunityToolkit.Mvvm - For MVVM infrastructure
   - System.Text.Json - For JSON serialization
+  - xUnit - For unit testing
+  - Moq - For mocking in tests
 
 ## Project Structure
 
@@ -64,12 +66,21 @@ TelAvivMuni-Exercise/
 │   ├── IDialogService.cs          # Dialog service interface
 │   └── DialogService.cs           # Dialog service implementation
 ├── Infrastructure/
-│   └── Behaviors/                 # WPF Attached Behaviors (MVVM pattern)
-│       ├── AutoFocusSearchBehavior.cs    # Auto-focus on typing
-│       ├── DataGridEnterBehavior.cs      # Handle Enter key in DataGrid
-│       ├── DataGridScrollIntoViewBehavior.cs # Scroll to selected item
-│       ├── DialogCloseBehavior.cs        # MVVM-friendly dialog closing
-│       └── EscapeClearBehavior.cs        # Clear text on Escape key
+│   ├── Behaviors/                 # WPF Attached Behaviors (MVVM pattern)
+│   │   ├── AutoFocusSearchBehavior.cs    # Auto-focus on typing
+│   │   ├── DataGridEnterBehavior.cs      # Handle Enter key in DataGrid
+│   │   ├── DataGridScrollIntoViewBehavior.cs # Scroll to selected item
+│   │   ├── DialogCloseBehavior.cs        # MVVM-friendly dialog closing
+│   │   └── EscapeClearBehavior.cs        # Clear text on Escape key
+│   ├── IRepository.cs             # Generic repository interface
+│   ├── IUnitOfWork.cs             # Unit of Work interface
+│   ├── IDataStore.cs              # Data persistence abstraction
+│   ├── ISerializer.cs             # Serialization abstraction
+│   ├── ProductRepository.cs       # Product-specific repository
+│   ├── UnitOfWork.cs              # Unit of Work implementation
+│   ├── FileDataStore.cs           # File-based data store
+│   ├── JsonSerializer.cs          # JSON serialization implementation
+│   └── OperationResult.cs         # Operation result with error messages
 ├── Models/
 │   ├── Product.cs                 # Product data model
 │   └── BrowserColumn.cs           # Column configuration model
@@ -78,7 +89,16 @@ TelAvivMuni-Exercise/
 ├── Data/
 │   └── Products.json              # Sample product data
 ├── MainWindow.xaml                # Main application window
-└── App.xaml                       # Application entry point
+├── App.xaml                       # Application entry point
+│
+TelAvivMuni-Exercise.Tests/        # Unit test project
+├── Infrastructure/
+│   ├── ProductRepositoryTests.cs  # Repository unit tests
+│   ├── UnitOfWorkTests.cs         # Unit of Work tests
+│   ├── FileDataStoreTests.cs      # Data store tests
+│   └── JsonSerializerTests.cs     # Serializer tests
+└── ViewModels/
+    └── MainWindowViewModelTests.cs # ViewModel tests
 ```
 
 ## How to Use
@@ -155,6 +175,66 @@ Products.json example:
 ]
 ```
 
+## Architecture
+
+### Repository and Unit of Work Patterns
+
+The application uses the Repository and Unit of Work patterns for data management, providing:
+
+- **Abstraction** - Decouples business logic from data persistence
+- **Testability** - Easy to mock for unit testing
+- **Flexibility** - Can swap persistence strategies (file, database, etc.)
+
+#### Key Components
+
+**IRepository<TEntity>** - Generic repository interface:
+```csharp
+public interface IRepository<TEntity> where TEntity : class
+{
+    IEnumerable<TEntity> Entities { get; }
+    Task<TEntity[]> GetAllAsync();
+    Task<TEntity?> GetByIdAsync(int id);
+    Task<OperationResult> AddAsync(TEntity entity);
+    Task<OperationResult> UpdateAsync(TEntity entity);
+    Task<OperationResult> DeleteAsync(TEntity entity);
+}
+```
+
+**IUnitOfWork** - Coordinates repositories and manages transactions:
+```csharp
+public interface IUnitOfWork : IDisposable
+{
+    IRepository<Product> Products { get; }
+    Task<int> SaveChangesAsync();
+}
+```
+
+**OperationResult** - Consistent result type for CRUD operations:
+```csharp
+var result = await repository.AddAsync(product);
+if (!result.Success)
+{
+    Console.WriteLine(result.ErrorMessage); // "A product with Id 1 already exists."
+}
+```
+
+#### Layered Abstraction
+
+The persistence layer uses Strategy pattern for flexibility:
+
+```
+ProductRepository
+    └── IDataStore<Product>
+            └── FileDataStore<Product>
+                    └── ISerializer<Product>
+                            └── JsonSerializer<Product>
+```
+
+This allows:
+- Swapping file-based storage for database storage
+- Changing serialization format (JSON → XML) without changing repository
+- Testing with in-memory implementations
+
 ## Key Features Implementation
 
 ### Column Configuration
@@ -218,6 +298,17 @@ dotnet run --project TelAvivMuni-Exercise.csproj
 
 Or simply press F5 in Visual Studio.
 
+### Run Tests
+```bash
+dotnet test TelAvivMuni-Exercise.Tests/TelAvivMuni-Exercise.Tests.csproj
+```
+
+The test suite includes 57 unit tests covering:
+- Repository operations (CRUD, error handling)
+- Unit of Work coordination
+- ViewModel commands and state management
+- Data store and serialization
+
 ## Design Decisions
 
 ### MVVM Pattern with Attached Behaviors
@@ -269,6 +360,14 @@ Or simply press F5 in Visual Studio.
 - **No Code-Behind** - All keyboard handling implemented via reusable attached behaviors
 
 ## Recent Improvements
+
+### Repository and Unit of Work Patterns (v3.0)
+- **Added Repository pattern** - Abstracts data access with `IRepository<T>`
+- **Added Unit of Work pattern** - Coordinates repositories via `IUnitOfWork`
+- **Layered persistence** - `IDataStore<T>` and `ISerializer<T>` for flexibility
+- **OperationResult type** - Consistent error handling with descriptive messages
+- **Comprehensive test suite** - 57 unit tests with xUnit and Moq
+- **Improved testability** - All dependencies are injectable and mockable
 
 ### MVVM Refactoring (v2.0)
 - **Removed ~80 lines** of keyboard event handling code from code-behind

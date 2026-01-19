@@ -1,18 +1,29 @@
+using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Text.Json;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using TelAvivMuni_Exercise.Infrastructure;
 using TelAvivMuni_Exercise.Models;
 
 namespace TelAvivMuni_Exercise.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
+        private readonly IUnitOfWork _unitOfWork;
         private ObservableCollection<Product> _products = new();
+        private string? _errorMessage;
+
         public ObservableCollection<Product> Products
         {
             get => _products;
             set => SetProperty(ref _products, value);
+        }
+
+        public string? ErrorMessage
+        {
+            get => _errorMessage;
+            set => SetProperty(ref _errorMessage, value);
         }
 
         private Product? _selectedProduct1;
@@ -29,49 +40,88 @@ namespace TelAvivMuni_Exercise.ViewModels
             set => SetProperty(ref _selectedProduct2, value);
         }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel() : this(App.UnitOfWork)
         {
-            LoadProducts();
         }
 
-        private void LoadProducts()
+        public MainWindowViewModel(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            LoadProductsAsync();
+        }
+
+        private async void LoadProductsAsync()
         {
             try
             {
-                var jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Products.json");
-                if (!File.Exists(jsonPath))
-                {
-                    Products = new ObservableCollection<Product>();
-                    return;
-                }
-
-                var json = File.ReadAllText(jsonPath);
-                if (string.IsNullOrWhiteSpace(json))
-                {
-                    Products = new ObservableCollection<Product>();
-                    return;
-                }
-
-                var products = JsonSerializer.Deserialize<List<Product>>(json, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-
-                Products = products != null && products.Count > 0
-                    ? new ObservableCollection<Product>(products)
-                    : new ObservableCollection<Product>();
+                ErrorMessage = null;
+                var products = await _unitOfWork.Products.GetAllAsync();
+                Products = new ObservableCollection<Product>(products);
             }
-            catch (JsonException)
+            catch (Exception ex)
             {
+                ErrorMessage = $"Failed to load products: {ex.Message}";
                 Products = new ObservableCollection<Product>();
             }
-            catch (IOException)
+        }
+
+        [RelayCommand]
+        private async Task<OperationResult> AddProductAsync(Product product)
+        {
+            ErrorMessage = null;
+            var result = await _unitOfWork.Products.AddAsync(product);
+            if (!result.Success)
             {
-                Products = new ObservableCollection<Product>();
+                ErrorMessage = result.ErrorMessage;
+                return result;
             }
-            catch (UnauthorizedAccessException)
+            await _unitOfWork.SaveChangesAsync();
+            Products.Add(product);
+            return result;
+        }
+
+        [RelayCommand]
+        private async Task<OperationResult> UpdateProductAsync(Product product)
+        {
+            ErrorMessage = null;
+            var result = await _unitOfWork.Products.UpdateAsync(product);
+            if (!result.Success)
             {
-                Products = new ObservableCollection<Product>();
+                ErrorMessage = result.ErrorMessage;
+                return result;
+            }
+            await _unitOfWork.SaveChangesAsync();
+            return result;
+        }
+
+        [RelayCommand]
+        private async Task<OperationResult> DeleteProductAsync(Product product)
+        {
+            ErrorMessage = null;
+            var result = await _unitOfWork.Products.DeleteAsync(product);
+            if (!result.Success)
+            {
+                ErrorMessage = result.ErrorMessage;
+                return result;
+            }
+            await _unitOfWork.SaveChangesAsync();
+            Products.Remove(product);
+            return result;
+        }
+
+        [RelayCommand]
+        private async Task<OperationResult> SaveChangesAsync()
+        {
+            ErrorMessage = null;
+            try
+            {
+                await _unitOfWork.SaveChangesAsync();
+                return OperationResult.Ok();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Failed to save changes: {ex.Message}";
+                return OperationResult.Fail(ErrorMessage);
             }
         }
     }

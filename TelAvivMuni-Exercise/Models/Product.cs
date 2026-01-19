@@ -1,6 +1,8 @@
+using TelAvivMuni_Exercise.Infrastructure;
+
 namespace TelAvivMuni_Exercise.Models
 {
-    public class Product
+    public class Product : IEntity
     {
         public int Id { get; set; }
         public string? Code { get; set; }
