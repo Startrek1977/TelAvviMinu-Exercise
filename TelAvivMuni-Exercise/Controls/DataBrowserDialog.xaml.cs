@@ -1,33 +1,20 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using TelAvivMuni_Exercise.ViewModels;
+using TelAvivMuni_Exercise.Infrastructure;
 
 namespace TelAvivMuni_Exercise.Controls
 {
     /// <summary>
     /// Dialog window for browsing and selecting items from a collection with filtering support.
-    /// Uses attached behaviors for keyboard handling and dialog closing (MVVM pattern).
+    /// Uses View-First initialization: the dialog is created and rendered first, then
+    /// data is loaded via ViewModel.Initialize() in the ContentRendered event.
     /// </summary>
     public partial class DataBrowserDialog : Window
     {
         public DataBrowserDialog()
         {
             InitializeComponent();
-            ContentRendered += OnContentRendered;
-        }
-
-        /// <summary>
-        /// Handles the ContentRendered event to apply the pending selection.
-        /// ContentRendered fires after the window content is fully rendered,
-        /// ensuring the DataGrid is ready to display the selection properly.
-        /// </summary>
-        private void OnContentRendered(object? sender, EventArgs e)
-        {
-            if (DataContext is DataBrowserDialogViewModel viewModel)
-            {
-                viewModel.ApplyPendingSelection();
-            }
         }
 
         /// <summary>
@@ -39,11 +26,11 @@ namespace TelAvivMuni_Exercise.Controls
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             // Only apply custom column configuration if columns are defined in the ViewModel
-            if (DataContext is not DataBrowserDialogViewModel viewModel || !viewModel.HasCustomColumns)
+            if (DataContext is not IColumnConfiguration columnConfig || !columnConfig.HasCustomColumns)
                 return;
 
             // Find the custom column configuration for this property
-            var customColumn = viewModel.Columns?.FirstOrDefault(c => c.DataField == e.PropertyName);
+            var customColumn = columnConfig.Columns?.FirstOrDefault(c => c.DataField == e.PropertyName);
 
             if (customColumn == null)
             {

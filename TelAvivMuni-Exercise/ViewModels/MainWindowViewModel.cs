@@ -47,21 +47,19 @@ namespace TelAvivMuni_Exercise.ViewModels
         public MainWindowViewModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            LoadProductsAsync();
+            _ = LoadProductsAsync();
         }
 
-        private async void LoadProductsAsync()
+        private async Task LoadProductsAsync()
         {
             try
             {
-                ErrorMessage = null;
                 var products = await _unitOfWork.Products.GetAllAsync();
                 Products = new ObservableCollection<Product>(products);
             }
             catch (Exception ex)
             {
                 ErrorMessage = $"Failed to load products: {ex.Message}";
-                Products = new ObservableCollection<Product>();
             }
         }
 

@@ -72,6 +72,8 @@ TelAvivMuni-Exercise/
 │   │   ├── DataGridScrollIntoViewBehavior.cs # Scroll to selected item
 │   │   ├── DialogCloseBehavior.cs        # MVVM-friendly dialog closing
 │   │   └── EscapeClearBehavior.cs        # Clear text on Escape key
+│   ├── IDeferredInitialization.cs # Interface for View-First initialization
+│   ├── IColumnConfiguration.cs    # Interface for custom column configuration
 │   ├── IRepository.cs             # Generic repository interface
 │   ├── IUnitOfWork.cs             # Unit of Work interface
 │   ├── IDataStore.cs              # Data persistence abstraction
@@ -344,13 +346,16 @@ The test suite includes 57 unit tests covering:
 - User-friendly error messages
 - Silent fallback for missing data files
 
-### Selection Synchronization
-- Uses `ContentRendered` event to apply selection after the view is fully rendered
-- Pending selection stored in ViewModel until view is ready (`ApplyPendingSelection()`)
+### Selection Synchronization (View-First Pattern)
+- **View-First Initialization** - Dialog window is created and rendered first, then data is loaded
+- **Deferred Loading** - ViewModel stores pending items/selection until View is ready
+- **Loading Overlay** - Semi-transparent "Loading..." overlay displayed while data loads
+- **ContentRendered Event** - Triggers `Initialize()` method via XAML `CallMethodAction` (no code-behind)
+- **IDeferredInitialization Interface** - Contract for ViewModels supporting deferred initialization
+- **IColumnConfiguration Interface** - Contract for ViewModels providing custom column definitions
 - Two-way XAML binding between DataGrid.SelectedItem and ViewModel.SelectedItem
-- `ICollectionView.MoveCurrentTo()` synchronizes the collection view's current item
-- `DataGridScrollIntoViewBehavior` scrolls to selected item (MVVM-friendly, no code-behind)
-- Clean separation: ViewModel stores pending selection, View triggers application after render
+- `DataGridScrollIntoViewBehavior` scrolls to selected item (MVVM-friendly)
+- Clean MVVM separation: View depends only on interfaces, not concrete ViewModel types
 
 ### Keyboard Interaction (via Attached Behaviors)
 - **Type-to-Search** - Start typing anywhere to focus search box automatically

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -259,8 +260,7 @@ namespace TelAvivMuni_Exercise.Controls
             else
             {
                 // Show the selected item's display value with full opacity
-                var displayValue = GetDisplayValue(SelectedItem);
-                _textBox.Text = displayValue;
+                _textBox.Text = GetDisplayValue(SelectedItem);
                 _textBox.Opacity = 1.0;
             }
         }
