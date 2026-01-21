@@ -13,15 +13,25 @@ namespace TelAvivMuni_Exercise.ViewModels
     /// <summary>
     /// ViewModel for the DataBrowserDialog which provides filtering and selection functionality
     /// for browsing a collection of items.
+    /// Uses View-First initialization pattern: the View is created first, then data is loaded
+    /// after the View is fully rendered via InitializeAsync().
     /// </summary>
-    public class DataBrowserDialogViewModel : ObservableObject
+    public class DataBrowserDialogViewModel : ObservableObject, IDeferredInitialization, IColumnConfiguration
     {
         private readonly ObservableCollection<object> _items;
         private readonly ICollectionView _filteredItems;
-        private ObservableCollection<BrowserColumn>? _columns;
+        private readonly ObservableCollection<BrowserColumn>? _columns;
 
-        // Stores the pending selection to be applied after the view is fully loaded
+        // Deferred initialization data
+        private IEnumerable? _pendingItems;
         private object? _pendingSelection;
+
+        private bool _isLoading = true;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            private set => SetProperty(ref _isLoading, value);
+        }
 
         /// <summary>
         /// Gets or sets the search text used to filter the items collection.
@@ -45,29 +55,17 @@ namespace TelAvivMuni_Exercise.ViewModels
         /// </summary>
         private void RefreshFilterWithSelectionPreservation()
         {
-            // Preserve the selected item before refreshing the filter
-            var currentSelection = _selectedItem;
-
             // Refresh the filtered collection based on the current search text
             _filteredItems.Refresh();
             OnPropertyChanged(nameof(ItemsCount));
             OnPropertyChanged(nameof(HasSearchText));
 
-            // Always restore the selection to prevent it from being cleared
-            if (currentSelection != null)
+            // Re-notify SelectedItem to update DataGrid selection after filter changes
+            if (_selectedItem != null && _filteredItems.Cast<object>().Contains(_selectedItem))
             {
-                // Check if the selected item is still visible after filtering
-                if (_filteredItems.Cast<object>().Contains(currentSelection))
-                {
-                    // Item is still visible, move the collection view to it
-                    _filteredItems.MoveCurrentTo(currentSelection);
-
                     // Explicitly notify that SelectedItem hasn't changed to force DataGrid update
                     // This is especially important when clearing the filter
-                    OnPropertyChanged(nameof(SelectedItem));
-                }
-                // Don't clear the SelectedItem even if it's filtered out
-                // This preserves the selection in the ViewModel
+                OnPropertyChanged(nameof(SelectedItem));
             }
 
             // Notify the OK command to re-evaluate its CanExecute state
@@ -114,24 +112,43 @@ namespace TelAvivMuni_Exercise.ViewModels
         private ICommand? _clearSearchCommand;
         public ICommand ClearSearchCommand => _clearSearchCommand ??= new RelayCommand(OnClearSearch);
 
-        public DataBrowserDialogViewModel(IEnumerable items, object? currentSelection, ObservableCollection<BrowserColumn>? columns = null)
+        /// <summary>
+        /// Creates a ViewModel with deferred data loading.
+        /// Call InitializeAsync() after the View is fully rendered to load the data.
+        /// </summary>
+        public DataBrowserDialogViewModel(IEnumerable? items, object? currentSelection, ObservableCollection<BrowserColumn>? columns = null)
         {
             _items = new ObservableCollection<object>();
             _columns = columns;
-
-            if (items != null)
-            {
-                foreach (var item in items)
-                {
-                    _items.Add(item);
-                }
-            }
+            _pendingItems = items;
+            _pendingSelection = currentSelection;
 
             _filteredItems = CollectionViewSource.GetDefaultView(_items);
             _filteredItems.Filter = FilterItems;
+        }
 
-            // Store the pending selection to be applied after the view is fully rendered
-            _pendingSelection = currentSelection;
+        /// <summary>
+        /// Initializes the ViewModel by loading the data.
+        /// Call this after the View is fully rendered (e.g., in ContentRendered event).
+        /// </summary>
+        public void Initialize()
+        {
+            if (_pendingItems != null)
+            {
+                foreach (var item in _pendingItems)
+                {
+                    _items.Add(item);
+                }
+                _pendingItems = null;
+            }
+
+            _filteredItems.Refresh();
+            OnPropertyChanged(nameof(ItemsCount));
+
+            SelectedItem = FindMatchingItem(_pendingSelection);
+            _pendingSelection = null;
+
+            IsLoading = false;
         }
 
         private bool FilterItems(object item)
@@ -183,23 +200,28 @@ namespace TelAvivMuni_Exercise.ViewModels
         }
 
         /// <summary>
-        /// Applies the pending selection after the view is fully loaded and rendered.
-        /// This ensures the DataGrid properly reflects the selected item with highlighting.
-        /// Should be called from the view's ContentRendered event.
+        /// Finds a matching item in the items collection for the given selection.
+        /// Uses IEntity.Id for entities, then Equals, then ReferenceEquals as fallback.
         /// </summary>
-        public void ApplyPendingSelection()
+        private object? FindMatchingItem(object? selection)
         {
-            if (_pendingSelection != null)
+            if (selection == null)
+                return null;
+
+            // For IEntity types, match by Id
+            if (selection is IEntity selectedEntity)
             {
-                // Find the matching item by reference in the current items collection
-                var matchedItem = _items.FirstOrDefault(item => ReferenceEquals(item, _pendingSelection));
-                if (matchedItem != null)
-                {
-                    SelectedItem = matchedItem;
-                    _filteredItems.MoveCurrentTo(matchedItem);
-                }
-                _pendingSelection = null;
+                return _items.FirstOrDefault(item =>
+                    item is IEntity entity && entity.Id == selectedEntity.Id);
             }
+
+            // Try Equals comparison
+            var equalMatch = _items.FirstOrDefault(item => item.Equals(selection));
+            if (equalMatch != null)
+                return equalMatch;
+
+            // Fall back to reference equality
+            return _items.FirstOrDefault(item => ReferenceEquals(item, selection));
         }
     }
 }
