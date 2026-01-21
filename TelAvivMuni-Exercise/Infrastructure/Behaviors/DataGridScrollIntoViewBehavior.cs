@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,6 +8,7 @@ namespace TelAvivMuni_Exercise.Infrastructure.Behaviors
     /// Attached behavior that scrolls a DataGrid to bring the selected item into view.
     /// When the bound SelectedItem changes, the DataGrid automatically scrolls to show it.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class DataGridScrollIntoViewBehavior
     {
         /// <summary>

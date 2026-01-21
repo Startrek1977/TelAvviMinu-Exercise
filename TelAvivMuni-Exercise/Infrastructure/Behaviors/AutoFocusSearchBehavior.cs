@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,6 +10,7 @@ namespace TelAvivMuni_Exercise.Infrastructure.Behaviors
     /// text input keys (letters, numbers, space) in the attached element.
     /// Also handles Escape key to invoke a cancel command when the target is not focused.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class AutoFocusSearchBehavior
     {
         /// <summary>

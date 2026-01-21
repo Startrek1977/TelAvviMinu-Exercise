@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,6 +11,7 @@ namespace TelAvivMuni_Exercise.Controls
     /// Uses View-First initialization: the dialog is created and rendered first, then
     /// data is loaded via ViewModel.Initialize() in the ContentRendered event.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public partial class DataBrowserDialog : Window
     {
         public DataBrowserDialog()

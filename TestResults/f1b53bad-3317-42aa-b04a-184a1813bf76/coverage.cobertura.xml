@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coverage line-rate="1" branch-rate="0.9444" version="1.9" timestamp="1769031091" lines-covered="173" lines-valid="173" branches-covered="51" branches-valid="54">
+  <sources>
+    <source></source>
+  </sources>
+  <packages>
+    <package name="TelAvivMuni-Exercise" line-rate="1" branch-rate="0.9444" complexity="90">
+      <classes>
+        <class name="TelAvivMuni_Exercise.ViewModels.DataBrowserDialogViewModel" filename="https://raw.githubusercontent.com/Startrek1977/TelAvviMinu-Exercise/ce0aacb660a7337fbfd3a6d24e93abf19e6f9e16/TelAvivMuni-Exercise/ViewModels/DataBrowserDialogViewModel.cs" line-rate="1" branch-rate="0.9473" complexity="52">
+          <methods>
+            <method name="get_IsLoading" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="32" hits="4" branch="False" />
+              </lines>
+            </method>
+            <method name="set_IsLoading" signature="(System.Boolean)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="33" hits="44" branch="False" />
+              </lines>
+            </method>
+            <method name="get_SearchText" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="42" hits="619" branch="False" />
+              </lines>
+            </method>
+            <method name="set_SearchText" signature="(System.String)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="44" hits="24" branch="False" />
+                <line number="45" hits="24" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="21" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="46" hits="23" branch="False" />
+                <line number="47" hits="23" branch="False" />
+                <line number="48" hits="23" branch="False" />
+                <line number="49" hits="24" branch="False" />
+              </lines>
+            </method>
+            <method name="RefreshFilterWithSelectionPreservation" signature="()" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="57" hits="23" branch="False" />
+                <line number="59" hits="23" branch="False" />
+                <line number="60" hits="23" branch="False" />
+                <line number="61" hits="23" branch="False" />
+                <line number="64" hits="23" branch="True" condition-coverage="100% (4/4)">
+                  <conditions>
+                    <condition number="43" type="jump" coverage="100%" />
+                    <condition number="72" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="65" hits="2" branch="False" />
+                <line number="68" hits="2" branch="False" />
+                <line number="69" hits="2" branch="False" />
+                <line number="73" hits="23" branch="False" />
+                <line number="74" hits="23" branch="False" />
+              </lines>
+            </method>
+            <method name="get_HasSearchText" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="76" hits="3" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Columns" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="78" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="get_HasCustomColumns" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="80" hits="5" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="6" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+              </lines>
+            </method>
+            <method name="get_SelectedItem" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="85" hits="29" branch="False" />
+              </lines>
+            </method>
+            <method name="set_SelectedItem" signature="(System.Object)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="87" hits="54" branch="False" />
+                <line number="88" hits="54" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="21" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="89" hits="16" branch="False" />
+                <line number="90" hits="16" branch="False" />
+                <line number="91" hits="16" branch="False" />
+                <line number="92" hits="54" branch="False" />
+              </lines>
+            </method>
+            <method name="get_FilteredItems" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="95" hits="13" branch="False" />
+              </lines>
+            </method>
+            <method name="get_ItemsCount" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="97" hits="12" branch="False" />
+              </lines>
+            </method>
+            <method name="get_DialogResult" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="102" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="set_DialogResult" signature="(System.Nullable`1&lt;System.Boolean&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="103" hits="3" branch="False" />
+              </lines>
+            </method>
+            <method name="get_OkCommand" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="107" hits="48" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="7" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+              </lines>
+            </method>
+            <method name="get_CancelCommand" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="110" hits="1" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="7" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+              </lines>
+            </method>
+            <method name="get_ClearSearchCommand" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="113" hits="2" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="7" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+              </lines>
+            </method>
+            <method name="Initialize" signature="()" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="135" hits="44" branch="False" />
+                <line number="136" hits="44" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="12" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="137" hits="42" branch="False" />
+                <line number="138" hits="526" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="58" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="139" hits="200" branch="False" />
+                <line number="140" hits="200" branch="False" />
+                <line number="141" hits="200" branch="False" />
+                <line number="142" hits="42" branch="False" />
+                <line number="143" hits="42" branch="False" />
+                <line number="145" hits="44" branch="False" />
+                <line number="146" hits="44" branch="False" />
+                <line number="148" hits="44" branch="False" />
+                <line number="149" hits="44" branch="False" />
+                <line number="151" hits="44" branch="False" />
+                <line number="152" hits="44" branch="False" />
+              </lines>
+            </method>
+            <method name="FilterItems" signature="(System.Object)" line-rate="1" branch-rate="0.8" complexity="10">
+              <lines>
+                <line number="155" hits="520" branch="False" />
+                <line number="156" hits="520" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="14" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="157" hits="425" branch="False" />
+                <line number="159" hits="95" branch="False" />
+                <line number="160" hits="95" branch="False" />
+                <line number="162" hits="1287" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="126" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="163" hits="514" branch="False" />
+                <line number="164" hits="514" branch="False" />
+                <line number="165" hits="514" branch="True" condition-coverage="66.66% (4/6)">
+                  <conditions>
+                    <condition number="73" type="jump" coverage="50%" />
+                    <condition number="83" type="jump" coverage="50%" />
+                    <condition number="107" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="166" hits="26" branch="False" />
+                <line number="167" hits="488" branch="False" />
+                <line number="169" hits="69" branch="False" />
+                <line number="170" hits="520" branch="False" />
+              </lines>
+            </method>
+            <method name="OnOk" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="173" hits="1" branch="False" />
+                <line number="174" hits="1" branch="False" />
+                <line number="175" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="CanOk" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="182" hits="8" branch="False" />
+                <line number="184" hits="8" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="12" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="185" hits="1" branch="False" />
+                <line number="189" hits="7" branch="False" />
+                <line number="190" hits="8" branch="False" />
+              </lines>
+            </method>
+            <method name="OnCancel" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="193" hits="1" branch="False" />
+                <line number="194" hits="1" branch="False" />
+                <line number="195" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="OnClearSearch" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="198" hits="2" branch="False" />
+                <line number="199" hits="2" branch="False" />
+                <line number="200" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="FindMatchingItem" signature="(System.Object)" line-rate="1" branch-rate="1" complexity="6">
+              <lines>
+                <line number="207" hits="44" branch="False" />
+                <line number="208" hits="44" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="25" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="209" hits="36" branch="False" />
+                <line number="212" hits="8" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="61" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="213" hits="4" branch="False" />
+                <line number="214" hits="4" branch="False" />
+                <line number="215" hits="4" branch="False" />
+                <line number="219" hits="4" branch="False" />
+                <line number="220" hits="4" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="122" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="221" hits="3" branch="False" />
+                <line number="224" hits="1" branch="False" />
+                <line number="225" hits="44" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(System.Collections.IEnumerable,System.Object,System.Collections.ObjectModel.ObservableCollection`1&lt;TelAvivMuni_Exercise.Models.BrowserColumn&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="29" hits="54" branch="False" />
+                <line number="39" hits="54" branch="False" />
+                <line number="119" hits="54" branch="False" />
+                <line number="120" hits="54" branch="False" />
+                <line number="121" hits="54" branch="False" />
+                <line number="122" hits="54" branch="False" />
+                <line number="123" hits="54" branch="False" />
+                <line number="124" hits="54" branch="False" />
+                <line number="126" hits="54" branch="False" />
+                <line number="127" hits="54" branch="False" />
+                <line number="128" hits="54" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="32" hits="4" branch="False" />
+            <line number="33" hits="44" branch="False" />
+            <line number="42" hits="619" branch="False" />
+            <line number="44" hits="24" branch="False" />
+            <line number="45" hits="24" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="21" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="46" hits="23" branch="False" />
+            <line number="47" hits="23" branch="False" />
+            <line number="48" hits="23" branch="False" />
+            <line number="49" hits="24" branch="False" />
+            <line number="57" hits="23" branch="False" />
+            <line number="59" hits="23" branch="False" />
+            <line number="60" hits="23" branch="False" />
+            <line number="61" hits="23" branch="False" />
+            <line number="64" hits="23" branch="True" condition-coverage="100% (4/4)">
+              <conditions>
+                <condition number="43" type="jump" coverage="100%" />
+                <condition number="72" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="65" hits="2" branch="False" />
+            <line number="68" hits="2" branch="False" />
+            <line number="69" hits="2" branch="False" />
+            <line number="73" hits="23" branch="False" />
+            <line number="74" hits="23" branch="False" />
+            <line number="76" hits="3" branch="False" />
+            <line number="78" hits="2" branch="False" />
+            <line number="80" hits="5" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="6" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="85" hits="29" branch="False" />
+            <line number="87" hits="54" branch="False" />
+            <line number="88" hits="54" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="21" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="89" hits="16" branch="False" />
+            <line number="90" hits="16" branch="False" />
+            <line number="91" hits="16" branch="False" />
+            <line number="92" hits="54" branch="False" />
+            <line number="95" hits="13" branch="False" />
+            <line number="97" hits="12" branch="False" />
+            <line number="102" hits="2" branch="False" />
+            <line number="103" hits="3" branch="False" />
+            <line number="107" hits="48" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="7" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="110" hits="1" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="7" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="113" hits="2" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="7" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="135" hits="44" branch="False" />
+            <line number="136" hits="44" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="12" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="137" hits="42" branch="False" />
+            <line number="138" hits="526" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="58" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="139" hits="200" branch="False" />
+            <line number="140" hits="200" branch="False" />
+            <line number="141" hits="200" branch="False" />
+            <line number="142" hits="42" branch="False" />
+            <line number="143" hits="42" branch="False" />
+            <line number="145" hits="44" branch="False" />
+            <line number="146" hits="44" branch="False" />
+            <line number="148" hits="44" branch="False" />
+            <line number="149" hits="44" branch="False" />
+            <line number="151" hits="44" branch="False" />
+            <line number="152" hits="44" branch="False" />
+            <line number="155" hits="520" branch="False" />
+            <line number="156" hits="520" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="14" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="157" hits="425" branch="False" />
+            <line number="159" hits="95" branch="False" />
+            <line number="160" hits="95" branch="False" />
+            <line number="162" hits="1287" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="126" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="163" hits="514" branch="False" />
+            <line number="164" hits="514" branch="False" />
+            <line number="165" hits="514" branch="True" condition-coverage="66.66% (4/6)">
+              <conditions>
+                <condition number="73" type="jump" coverage="50%" />
+                <condition number="83" type="jump" coverage="50%" />
+                <condition number="107" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="166" hits="26" branch="False" />
+            <line number="167" hits="488" branch="False" />
+            <line number="169" hits="69" branch="False" />
+            <line number="170" hits="520" branch="False" />
+            <line number="173" hits="1" branch="False" />
+            <line number="174" hits="1" branch="False" />
+            <line number="175" hits="1" branch="False" />
+            <line number="182" hits="8" branch="False" />
+            <line number="184" hits="8" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="12" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="185" hits="1" branch="False" />
+            <line number="189" hits="7" branch="False" />
+            <line number="190" hits="8" branch="False" />
+            <line number="193" hits="1" branch="False" />
+            <line number="194" hits="1" branch="False" />
+            <line number="195" hits="1" branch="False" />
+            <line number="198" hits="2" branch="False" />
+            <line number="199" hits="2" branch="False" />
+            <line number="200" hits="2" branch="False" />
+            <line number="207" hits="44" branch="False" />
+            <line number="208" hits="44" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="25" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="209" hits="36" branch="False" />
+            <line number="212" hits="8" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="61" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="213" hits="4" branch="False" />
+            <line number="214" hits="4" branch="False" />
+            <line number="215" hits="4" branch="False" />
+            <line number="219" hits="4" branch="False" />
+            <line number="220" hits="4" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="122" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="221" hits="3" branch="False" />
+            <line number="224" hits="1" branch="False" />
+            <line number="225" hits="44" branch="False" />
+            <line number="29" hits="54" branch="False" />
+            <line number="39" hits="54" branch="False" />
+            <line number="119" hits="54" branch="False" />
+            <line number="120" hits="54" branch="False" />
+            <line number="121" hits="54" branch="False" />
+            <line number="122" hits="54" branch="False" />
+            <line number="123" hits="54" branch="False" />
+            <line number="124" hits="54" branch="False" />
+            <line number="126" hits="54" branch="False" />
+            <line number="127" hits="54" branch="False" />
+            <line number="128" hits="54" branch="False" />
+          </lines>
+        </class>
+        <class name="TelAvivMuni_Exercise.ViewModels.MainWindowViewModel" filename="https://raw.githubusercontent.com/Startrek1977/TelAvviMinu-Exercise/ce0aacb660a7337fbfd3a6d24e93abf19e6f9e16/TelAvivMuni-Exercise/ViewModels/MainWindowViewModel.cs" line-rate="1" branch-rate="1" complexity="10">
+          <methods>
+            <method name="get_Products" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="20" hits="11" branch="False" />
+              </lines>
+            </method>
+            <method name="set_Products" signature="(System.Collections.ObjectModel.ObservableCollection`1&lt;TelAvivMuni_Exercise.Models.Product&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="21" hits="19" branch="False" />
+              </lines>
+            </method>
+            <method name="get_ErrorMessage" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="26" hits="12" branch="False" />
+              </lines>
+            </method>
+            <method name="set_ErrorMessage" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="27" hits="23" branch="False" />
+              </lines>
+            </method>
+            <method name="get_SelectedProduct1" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="33" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="set_SelectedProduct1" signature="(TelAvivMuni_Exercise.Models.Product)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="34" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="get_SelectedProduct2" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="40" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="set_SelectedProduct2" signature="(TelAvivMuni_Exercise.Models.Product)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="41" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(TelAvivMuni_Exercise.Infrastructure.IUnitOfWork)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="15" hits="20" branch="False" />
+                <line number="52" hits="20" branch="False" />
+                <line number="53" hits="20" branch="False" />
+                <line number="54" hits="20" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="22" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="55" hits="19" branch="False" />
+                <line number="56" hits="19" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="20" hits="11" branch="False" />
+            <line number="21" hits="19" branch="False" />
+            <line number="26" hits="12" branch="False" />
+            <line number="27" hits="23" branch="False" />
+            <line number="33" hits="1" branch="False" />
+            <line number="34" hits="1" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="41" hits="1" branch="False" />
+            <line number="15" hits="20" branch="False" />
+            <line number="52" hits="20" branch="False" />
+            <line number="53" hits="20" branch="False" />
+            <line number="54" hits="20" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="22" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="55" hits="19" branch="False" />
+            <line number="56" hits="19" branch="False" />
+          </lines>
+        </class>
+        <class name="TelAvivMuni_Exercise.Infrastructure.FileDataStore`1" filename="https://raw.githubusercontent.com/Startrek1977/TelAvviMinu-Exercise/ce0aacb660a7337fbfd3a6d24e93abf19e6f9e16/TelAvivMuni-Exercise/Infrastructure/FileDataStore.cs" line-rate="1" branch-rate="1" complexity="5">
+          <methods>
+            <method name="get_FilePath" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="35" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(System.String,TelAvivMuni_Exercise.Infrastructure.ISerializer`1&lt;T&gt;)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="18" hits="34" branch="False" />
+                <line number="27" hits="34" branch="False" />
+                <line number="28" hits="34" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="24" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="29" hits="33" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="46" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="30" hits="32" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="35" hits="1" branch="False" />
+            <line number="18" hits="34" branch="False" />
+            <line number="27" hits="34" branch="False" />
+            <line number="28" hits="34" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="24" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="29" hits="33" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="46" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="30" hits="32" branch="False" />
+          </lines>
+        </class>
+        <class name="TelAvivMuni_Exercise.Infrastructure.ICommandExtension" filename="https://raw.githubusercontent.com/Startrek1977/TelAvviMinu-Exercise/ce0aacb660a7337fbfd3a6d24e93abf19e6f9e16/TelAvivMuni-Exercise/Infrastructure/ICommand.Extension.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="NotifyCanExecuteChanged" signature="(System.Windows.Input.ICommand)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="9" hits="39" branch="False" />
+                <line number="10" hits="39" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="14" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="11" hits="39" branch="False" />
+                <line number="12" hits="39" branch="False" />
+                <line number="13" hits="39" branch="False" />
+                <line number="14" hits="39" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="39" branch="False" />
+            <line number="10" hits="39" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="14" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="11" hits="39" branch="False" />
+            <line number="12" hits="39" branch="False" />
+            <line number="13" hits="39" branch="False" />
+            <line number="14" hits="39" branch="False" />
+          </lines>
+        </class>
+        <class name="TelAvivMuni_Exercise.Infrastructure.JsonSerializer`1" filename="https://raw.githubusercontent.com/Startrek1977/TelAvviMinu-Exercise/ce0aacb660a7337fbfd3a6d24e93abf19e6f9e16/TelAvivMuni-Exercise/Infrastructure/JsonSerializer.cs" line-rate="1" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_FileExtension" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="38" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="20" hits="41" branch="False" />
+                <line number="21" hits="41" branch="False" />
+                <line number="22" hits="41" branch="False" />
+                <line number="23" hits="41" branch="False" />
+                <line number="24" hits="41" branch="False" />
+                <line number="25" hits="41" branch="False" />
+                <line number="26" hits="41" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(System.Text.Json.JsonSerializerOptions)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="33" hits="43" branch="False" />
+                <line number="34" hits="43" branch="False" />
+                <line number="35" hits="43" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="38" hits="1" branch="False" />
+            <line number="20" hits="41" branch="False" />
+            <line number="21" hits="41" branch="False" />
+            <line number="22" hits="41" branch="False" />
+            <line number="23" hits="41" branch="False" />
+            <line number="24" hits="41" branch="False" />
+            <line number="25" hits="41" branch="False" />
+            <line number="26" hits="41" branch="False" />
+            <line number="33" hits="43" branch="False" />
+            <line number="34" hits="43" branch="False" />
+            <line number="35" hits="43" branch="False" />
+          </lines>
+        </class>
+        <class name="TelAvivMuni_Exercise.Infrastructure.OperationResult" filename="https://raw.githubusercontent.com/Startrek1977/TelAvviMinu-Exercise/ce0aacb660a7337fbfd3a6d24e93abf19e6f9e16/TelAvivMuni-Exercise/Infrastructure/OperationResult.cs" line-rate="1" branch-rate="1" complexity="4">
+          <methods>
+            <method name="Ok" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="27" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="Fail" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="32" hits="16" branch="False" />
+              </lines>
+            </method>
+            <method name="op_Implicit" signature="(TelAvivMuni_Exercise.Infrastructure.OperationResult)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="37" hits="4" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(System.Boolean,System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="19" hits="34" branch="False" />
+                <line number="22" hits="34" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="27" hits="18" branch="False" />
+            <line number="32" hits="16" branch="False" />
+            <line number="37" hits="4" branch="False" />
+            <line number="19" hits="34" branch="False" />
+            <line number="22" hits="34" branch="False" />
+          </lines>
+        </class>
+        <class name="TelAvivMuni_Exercise.Infrastructure.ProductRepository" filename="https://raw.githubusercontent.com/Startrek1977/TelAvviMinu-Exercise/ce0aacb660a7337fbfd3a6d24e93abf19e6f9e16/TelAvivMuni-Exercise/Infrastructure/ProductRepository.cs" line-rate="1" branch-rate="1" complexity="5">
+          <methods>
+            <method name="get_Entities" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="46" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="28" hits="5" branch="False" />
+                <line number="29" hits="5" branch="False" />
+                <line number="30" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(TelAvivMuni_Exercise.Infrastructure.IDataStore`1&lt;TelAvivMuni_Exercise.Models.Product&gt;)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="21" hits="24" branch="False" />
+                <line number="39" hits="24" branch="False" />
+                <line number="40" hits="24" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="22" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="41" hits="23" branch="False" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="1" branch="False" />
+                <line number="18" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="46" hits="1" branch="False" />
+            <line number="28" hits="5" branch="False" />
+            <line number="29" hits="5" branch="False" />
+            <line number="30" hits="5" branch="False" />
+            <line number="21" hits="24" branch="False" />
+            <line number="39" hits="24" branch="False" />
+            <line number="40" hits="24" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="22" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="41" hits="23" branch="False" />
+            <line number="17" hits="1" branch="False" />
+            <line number="18" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="TelAvivMuni_Exercise.Infrastructure.UnitOfWork" filename="https://raw.githubusercontent.com/Startrek1977/TelAvviMinu-Exercise/ce0aacb660a7337fbfd3a6d24e93abf19e6f9e16/TelAvivMuni-Exercise/Infrastructure/UnitOfWork.cs" line-rate="1" branch-rate="0.8332999999999999" complexity="9">
+          <methods>
+            <method name="get_Products" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="33" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name="Dispose" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="43" hits="7" branch="False" />
+                <line number="44" hits="7" branch="False" />
+                <line number="45" hits="7" branch="False" />
+                <line number="46" hits="7" branch="False" />
+              </lines>
+            </method>
+            <method name="Dispose" signature="(System.Boolean)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="53" hits="7" branch="False" />
+                <line number="54" hits="7" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="12" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="55" hits="5" branch="False" />
+                <line number="56" hits="5" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="18" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="57" hits="5" branch="False" />
+                <line number="59" hits="5" branch="False" />
+                <line number="60" hits="5" branch="False" />
+                <line number="61" hits="5" branch="False" />
+                <line number="62" hits="7" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="19" hits="5" branch="False" />
+                <line number="20" hits="5" branch="False" />
+                <line number="21" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(TelAvivMuni_Exercise.Infrastructure.ProductRepository)" line-rate="1" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="28" hits="5" branch="False" />
+                <line number="29" hits="5" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="11" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="30" hits="5" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="33" hits="5" branch="False" />
+            <line number="43" hits="7" branch="False" />
+            <line number="44" hits="7" branch="False" />
+            <line number="45" hits="7" branch="False" />
+            <line number="46" hits="7" branch="False" />
+            <line number="53" hits="7" branch="False" />
+            <line number="54" hits="7" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="12" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="55" hits="5" branch="False" />
+            <line number="56" hits="5" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="18" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="57" hits="5" branch="False" />
+            <line number="59" hits="5" branch="False" />
+            <line number="60" hits="5" branch="False" />
+            <line number="61" hits="5" branch="False" />
+            <line number="62" hits="7" branch="False" />
+            <line number="19" hits="5" branch="False" />
+            <line number="20" hits="5" branch="False" />
+            <line number="21" hits="5" branch="False" />
+            <line number="28" hits="5" branch="False" />
+            <line number="29" hits="5" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="11" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="30" hits="5" branch="False" />
+          </lines>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>

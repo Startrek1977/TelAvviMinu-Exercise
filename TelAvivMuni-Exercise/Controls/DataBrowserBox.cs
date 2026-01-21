@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using TelAvivMuni_Exercise.Models;
@@ -12,6 +13,7 @@ namespace TelAvivMuni_Exercise.Controls
     /// A custom WPF control that combines a read-only textbox with browse and clear buttons.
     /// Displays the selected item and allows browsing through a collection via a dialog.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class DataBrowserBox : Control
     {
         /// <summary>

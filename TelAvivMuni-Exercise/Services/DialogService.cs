@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using TelAvivMuni_Exercise.Controls;
 using TelAvivMuni_Exercise.Models;
@@ -7,6 +8,7 @@ using TelAvivMuni_Exercise.ViewModels;
 
 namespace TelAvivMuni_Exercise.Services
 {
+    [ExcludeFromCodeCoverage]
     public class DialogService : IDialogService
     {
         public object? ShowBrowseDialog(IEnumerable items, string title, object? currentSelection, ObservableCollection<BrowserColumn>? columns = null)

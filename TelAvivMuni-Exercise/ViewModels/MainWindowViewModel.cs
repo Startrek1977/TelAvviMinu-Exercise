@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -40,6 +41,10 @@ namespace TelAvivMuni_Exercise.ViewModels
             set => SetProperty(ref _selectedProduct2, value);
         }
 
+        /// <summary>
+        /// Runtime constructor used by XAML. Requires WPF Application context.
+        /// </summary>
+        [ExcludeFromCodeCoverage]
         public MainWindowViewModel() : this(App.UnitOfWork)
         {
         }

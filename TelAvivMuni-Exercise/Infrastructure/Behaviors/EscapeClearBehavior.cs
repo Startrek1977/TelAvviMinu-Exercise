@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,6 +8,7 @@ namespace TelAvivMuni_Exercise.Infrastructure.Behaviors
     /// <summary>
     /// Attached behavior that clears a TextBox's text when the Escape key is pressed.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class EscapeClearBehavior
     {
         /// <summary>

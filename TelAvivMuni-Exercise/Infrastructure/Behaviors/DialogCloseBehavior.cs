@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 
 namespace TelAvivMuni_Exercise.Infrastructure.Behaviors
@@ -7,6 +8,7 @@ namespace TelAvivMuni_Exercise.Infrastructure.Behaviors
     /// Attached behavior that closes a Window when a bound DialogResult property changes.
     /// This enables MVVM-friendly dialog closing by monitoring a ViewModel's DialogResult property.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class DialogCloseBehavior
     {
         /// <summary>

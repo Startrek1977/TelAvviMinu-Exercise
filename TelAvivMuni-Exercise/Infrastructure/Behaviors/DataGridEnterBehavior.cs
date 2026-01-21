@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ namespace TelAvivMuni_Exercise.Infrastructure.Behaviors
     /// Attached behavior that executes a command when Enter/Return key is pressed in a DataGrid.
     /// This prevents the default DataGrid row navigation behavior and allows custom actions.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class DataGridEnterBehavior
     {
         /// <summary>

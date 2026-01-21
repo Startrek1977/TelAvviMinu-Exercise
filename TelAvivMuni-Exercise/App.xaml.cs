@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using TelAvivMuni_Exercise.Infrastructure;
 
@@ -6,6 +7,7 @@ namespace TelAvivMuni_Exercise;
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
+[ExcludeFromCodeCoverage]
 public partial class App : Application
 {
     private static IUnitOfWork? _unitOfWork;

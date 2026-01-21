@@ -1,0 +1,30 @@
+Summary
+  Generated on: 21/01/2026 - 23:31:41
+  Coverage date: 21/01/2026 - 23:31:31
+  Parser: Cobertura
+  Assemblies: 1
+  Classes: 8
+  Files: 8
+  Line coverage: 100%
+  Covered lines: 173
+  Uncovered lines: 0
+  Coverable lines: 173
+  Total lines: 785
+  Branch coverage: 94.4% (51 of 54)
+  Covered branches: 51
+  Total branches: 54
+  Method coverage: 100% (53 of 53)
+  Full method coverage: 100% (53 of 53)
+  Covered methods: 53
+  Fully covered methods: 53
+  Total methods: 53
+
+TelAvivMuni-Exercise                                            100%
+  TelAvivMuni_Exercise.Infrastructure.FileDataStore<T>          100%
+  TelAvivMuni_Exercise.Infrastructure.ICommandExtension         100%
+  TelAvivMuni_Exercise.Infrastructure.JsonSerializer<T>         100%
+  TelAvivMuni_Exercise.Infrastructure.OperationResult           100%
+  TelAvivMuni_Exercise.Infrastructure.ProductRepository         100%
+  TelAvivMuni_Exercise.Infrastructure.UnitOfWork                100%
+  TelAvivMuni_Exercise.ViewModels.DataBrowserDialogViewModel    100%
+  TelAvivMuni_Exercise.ViewModels.MainWindowViewModel           100%

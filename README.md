@@ -98,9 +98,16 @@ TelAvivMuni-Exercise.Tests/        # Unit test project
 │   ├── ProductRepositoryTests.cs  # Repository unit tests
 │   ├── UnitOfWorkTests.cs         # Unit of Work tests
 │   ├── FileDataStoreTests.cs      # Data store tests
-│   └── JsonSerializerTests.cs     # Serializer tests
+│   ├── JsonSerializerTests.cs     # Serializer tests
+│   ├── OperationResultTests.cs    # OperationResult unit tests
+│   └── IEntityTests.cs            # IEntity interface tests
+├── Models/
+│   └── BrowserColumnTests.cs      # BrowserColumn model tests
 └── ViewModels/
-    └── MainWindowViewModelTests.cs # ViewModel tests
+    ├── MainWindowViewModelTests.cs           # MainWindow ViewModel tests
+    └── DataBrowserDialogViewModelTests.cs    # Dialog ViewModel tests
+│
+coverlet.runsettings               # Code coverage configuration
 ```
 
 ## How to Use
@@ -305,11 +312,25 @@ Or simply press F5 in Visual Studio.
 dotnet test TelAvivMuni-Exercise.Tests/TelAvivMuni-Exercise.Tests.csproj
 ```
 
-The test suite includes 57 unit tests covering:
+### Run Tests with Code Coverage
+```bash
+dotnet test --settings coverlet.runsettings --collect:"XPlat Code Coverage" --results-directory ./TestResults
+```
+
+Generate coverage report:
+```bash
+reportgenerator -reports:"TestResults/**/coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:TextSummary
+```
+
+The test suite includes **141 unit tests** with **100% code coverage** on all testable code:
 - Repository operations (CRUD, error handling)
 - Unit of Work coordination
 - ViewModel commands and state management
 - Data store and serialization
+- OperationResult success/failure patterns
+- BrowserColumn model properties
+- DataBrowserDialogViewModel search, filter, and selection logic
+- MainWindowViewModel CRUD commands and error handling
 
 ## Design Decisions
 
@@ -366,12 +387,19 @@ The test suite includes 57 unit tests covering:
 
 ## Recent Improvements
 
+### 100% Test Coverage (v4.0)
+- **141 unit tests** - Comprehensive test coverage for all business logic
+- **100% line coverage** - All testable code paths are covered
+- **100% method coverage** - Every method in testable classes is tested
+- **94.4% branch coverage** - Nearly all conditional branches are tested
+- **Coverage exclusions** - WPF UI components (behaviors, controls, dialogs) are excluded using `[ExcludeFromCodeCoverage]` attribute
+- **Coverlet configuration** - `coverlet.runsettings` file for consistent coverage measurement
+
 ### Repository and Unit of Work Patterns (v3.0)
 - **Added Repository pattern** - Abstracts data access with `IRepository<T>`
 - **Added Unit of Work pattern** - Coordinates repositories via `IUnitOfWork`
 - **Layered persistence** - `IDataStore<T>` and `ISerializer<T>` for flexibility
 - **OperationResult type** - Consistent error handling with descriptive messages
-- **Comprehensive test suite** - 57 unit tests with xUnit and Moq
 - **Improved testability** - All dependencies are injectable and mockable
 
 ### MVVM Refactoring (v2.0)

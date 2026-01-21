@@ -221,4 +221,220 @@ public class MainWindowViewModelTests
         Assert.True(propertyChangedRaised);
         Assert.Equal("Test error", viewModel.ErrorMessage);
     }
+
+    [Fact]
+    public async Task Products_PropertyChangedNotification()
+    {
+        // Arrange
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(Array.Empty<Product>());
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        var propertyChangedRaised = false;
+        viewModel.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(MainWindowViewModel.Products))
+                propertyChangedRaised = true;
+        };
+
+        var newProducts = new System.Collections.ObjectModel.ObservableCollection<Product>();
+
+        // Act
+        viewModel.Products = newProducts;
+
+        // Assert
+        Assert.True(propertyChangedRaised);
+        Assert.Same(newProducts, viewModel.Products);
+    }
+
+    [Fact]
+    public async Task AddProductCommand_WhenAddFails_SetsErrorMessage()
+    {
+        // Arrange
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(Array.Empty<Product>());
+        _mockProductRepository.Setup(r => r.AddAsync(It.IsAny<Product>()))
+            .ReturnsAsync(OperationResult.Fail("Add failed"));
+
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        var newProduct = new Product { Id = 1, Name = "New", Code = "N001", Category = "Cat", Price = 15.00m, Stock = 10 };
+
+        // Act
+        viewModel.AddProductCommand.Execute(newProduct);
+        await Task.Delay(100);
+
+        // Assert
+        Assert.Equal("Add failed", viewModel.ErrorMessage);
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Never);
+        Assert.DoesNotContain(newProduct, viewModel.Products);
+    }
+
+    [Fact]
+    public async Task UpdateProductCommand_WhenUpdateFails_SetsErrorMessage()
+    {
+        // Arrange
+        var existingProduct = new Product { Id = 1, Name = "Original", Code = "O001", Category = "Cat", Price = 10.00m, Stock = 100 };
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(new[] { existingProduct });
+        _mockProductRepository.Setup(r => r.UpdateAsync(It.IsAny<Product>()))
+            .ReturnsAsync(OperationResult.Fail("Update failed"));
+
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        var updatedProduct = new Product { Id = 1, Name = "Updated", Code = "U001", Category = "Cat", Price = 25.00m, Stock = 50 };
+
+        // Act
+        viewModel.UpdateProductCommand.Execute(updatedProduct);
+        await Task.Delay(100);
+
+        // Assert
+        Assert.Equal("Update failed", viewModel.ErrorMessage);
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Never);
+    }
+
+    [Fact]
+    public async Task DeleteProductCommand_WhenDeleteFails_SetsErrorMessage()
+    {
+        // Arrange
+        var productToDelete = new Product { Id = 1, Name = "ToDelete", Code = "D001", Category = "Cat", Price = 10.00m, Stock = 100 };
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(new[] { productToDelete });
+        _mockProductRepository.Setup(r => r.DeleteAsync(It.IsAny<Product>()))
+            .ReturnsAsync(OperationResult.Fail("Delete failed"));
+
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        // Act
+        viewModel.DeleteProductCommand.Execute(productToDelete);
+        await Task.Delay(100);
+
+        // Assert
+        Assert.Equal("Delete failed", viewModel.ErrorMessage);
+        _mockUnitOfWork.Verify(u => u.SaveChangesAsync(), Times.Never);
+        Assert.Contains(productToDelete, viewModel.Products);
+    }
+
+    [Fact]
+    public async Task SaveChangesCommand_WhenExceptionThrown_SetsErrorMessage()
+    {
+        // Arrange
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(Array.Empty<Product>());
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ThrowsAsync(new Exception("Save exception"));
+
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        // Act
+        viewModel.SaveChangesCommand.Execute(null);
+        await Task.Delay(100);
+
+        // Assert
+        Assert.Contains("Failed to save changes", viewModel.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task AddProductCommand_ClearsErrorMessageBeforeExecution()
+    {
+        // Arrange
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(Array.Empty<Product>());
+        _mockProductRepository.Setup(r => r.AddAsync(It.IsAny<Product>())).ReturnsAsync(OperationResult.Ok());
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ReturnsAsync(1);
+
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        viewModel.ErrorMessage = "Previous error";
+
+        var newProduct = new Product { Id = 1, Name = "New", Code = "N001", Category = "Cat", Price = 15.00m, Stock = 10 };
+
+        // Act
+        viewModel.AddProductCommand.Execute(newProduct);
+        await Task.Delay(100);
+
+        // Assert
+        Assert.Null(viewModel.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task UpdateProductCommand_ClearsErrorMessageBeforeExecution()
+    {
+        // Arrange
+        var existingProduct = new Product { Id = 1, Name = "Original", Code = "O001", Category = "Cat", Price = 10.00m, Stock = 100 };
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(new[] { existingProduct });
+        _mockProductRepository.Setup(r => r.UpdateAsync(It.IsAny<Product>())).ReturnsAsync(OperationResult.Ok());
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ReturnsAsync(1);
+
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        viewModel.ErrorMessage = "Previous error";
+
+        // Act
+        viewModel.UpdateProductCommand.Execute(existingProduct);
+        await Task.Delay(100);
+
+        // Assert
+        Assert.Null(viewModel.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task DeleteProductCommand_ClearsErrorMessageBeforeExecution()
+    {
+        // Arrange
+        var productToDelete = new Product { Id = 1, Name = "ToDelete", Code = "D001", Category = "Cat", Price = 10.00m, Stock = 100 };
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(new[] { productToDelete });
+        _mockProductRepository.Setup(r => r.DeleteAsync(It.IsAny<Product>())).ReturnsAsync(OperationResult.Ok());
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ReturnsAsync(0);
+
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        viewModel.ErrorMessage = "Previous error";
+
+        // Act
+        viewModel.DeleteProductCommand.Execute(productToDelete);
+        await Task.Delay(100);
+
+        // Assert
+        Assert.Null(viewModel.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task SaveChangesCommand_ClearsErrorMessageBeforeExecution()
+    {
+        // Arrange
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(Array.Empty<Product>());
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ReturnsAsync(0);
+
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        viewModel.ErrorMessage = "Previous error";
+
+        // Act
+        viewModel.SaveChangesCommand.Execute(null);
+        await Task.Delay(100);
+
+        // Assert
+        Assert.Null(viewModel.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task SaveChangesCommand_ReturnsOkResult_OnSuccess()
+    {
+        // Arrange
+        _mockProductRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(Array.Empty<Product>());
+        _mockUnitOfWork.Setup(u => u.SaveChangesAsync()).ReturnsAsync(0);
+
+        var viewModel = new MainWindowViewModel(_mockUnitOfWork.Object);
+        await Task.Delay(100);
+
+        // Act
+        viewModel.SaveChangesCommand.Execute(null);
+        await Task.Delay(100);
+
+        // Assert
+        Assert.Null(viewModel.ErrorMessage);
+    }
 }
