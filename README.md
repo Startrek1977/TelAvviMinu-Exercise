@@ -60,8 +60,8 @@ TelAvivMuni-Exercise/
 │   ├── DataBrowserBox.cs          # Custom control implementation
 │   └── DataBrowserDialog.xaml     # Browse dialog UI
 ├── ViewModels/
-│   ├── MainWindowViewModel.cs     # Main window view model
-│   └── DataBrowserDialogViewModel.cs # Dialog view model
+│   ├── MainWindowViewModel.cs        # Main window view model (core properties)
+│   └── MainWindowViewModel.Dialog.cs # Dialog-related properties (partial class)
 ├── Services/
 │   ├── IDialogService.cs          # Dialog service interface
 │   └── DialogService.cs           # Dialog service implementation
@@ -104,8 +104,8 @@ TelAvivMuni-Exercise.Tests/        # Unit test project
 ├── Models/
 │   └── BrowserColumnTests.cs      # BrowserColumn model tests
 └── ViewModels/
-    ├── MainWindowViewModelTests.cs           # MainWindow ViewModel tests
-    └── DataBrowserDialogViewModelTests.cs    # Dialog ViewModel tests
+    ├── MainWindowViewModelTests.cs           # MainWindow ViewModel tests (CRUD)
+    └── MainWindowViewModelDialogTests.cs     # MainWindow ViewModel dialog tests
 │
 coverlet.runsettings               # Code coverage configuration
 ```
@@ -322,15 +322,15 @@ Generate coverage report:
 reportgenerator -reports:"TestResults/**/coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:TextSummary
 ```
 
-The test suite includes **141 unit tests** with **100% code coverage** on all testable code:
+The test suite includes **142 unit tests** with **100% code coverage** on all testable code:
 - Repository operations (CRUD, error handling)
 - Unit of Work coordination
 - ViewModel commands and state management
 - Data store and serialization
 - OperationResult success/failure patterns
 - BrowserColumn model properties
-- DataBrowserDialogViewModel search, filter, and selection logic
 - MainWindowViewModel CRUD commands and error handling
+- MainWindowViewModel dialog search, filter, and selection logic
 
 ## Design Decisions
 
@@ -387,8 +387,15 @@ The test suite includes **141 unit tests** with **100% code coverage** on all te
 
 ## Recent Improvements
 
+### ViewModel Consolidation (v5.0)
+- **Removed DataBrowserDialogViewModel** - Consolidated dialog logic into MainWindowViewModel
+- **Partial classes** - `MainWindowViewModel.Dialog.cs` contains dialog-specific properties and commands
+- **Single ViewModel** - MainWindowViewModel now handles both main window and dialog functionality
+- **Simplified architecture** - No data duplication between ViewModels
+- **DialogCloseBehavior fix** - Added guard to prevent InvalidOperationException before dialog is shown
+
 ### 100% Test Coverage (v4.0)
-- **141 unit tests** - Comprehensive test coverage for all business logic
+- **142 unit tests** - Comprehensive test coverage for all business logic
 - **100% line coverage** - All testable code paths are covered
 - **100% method coverage** - Every method in testable classes is tested
 - **94.4% branch coverage** - Nearly all conditional branches are tested

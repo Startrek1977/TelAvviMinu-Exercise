@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 
@@ -32,7 +31,13 @@ namespace TelAvivMuni_Exercise.Infrastructure.Behaviors
         {
             if (d is Window window && e.NewValue is bool dialogResult)
             {
-                window.DialogResult = dialogResult;
+                // Only set DialogResult if the window is currently shown as a modal dialog
+                // This prevents InvalidOperationException when the binding triggers before ShowDialog()
+                // Check both IsVisible and IsLoaded to ensure the window is fully displayed
+                if (window.IsVisible && window.IsLoaded)
+                {
+                    window.DialogResult = dialogResult;
+                }
             }
         }
     }

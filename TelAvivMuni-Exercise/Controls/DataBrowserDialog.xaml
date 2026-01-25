@@ -13,7 +13,7 @@
         Background="White"
         behaviors:DialogCloseBehavior.DialogResult="{Binding DialogResult}"
         behaviors:AutoFocusSearchBehavior.TargetTextBox="{Binding ElementName=SearchTextBox}"
-        behaviors:AutoFocusSearchBehavior.EscapeCommand="{Binding CancelCommand}">
+        behaviors:AutoFocusSearchBehavior.EscapeCommand="{Binding DialogCancelCommand}">
   <i:Interaction.Triggers>
     <i:EventTrigger EventName="ContentRendered">
       <i:CallMethodAction TargetObject="{Binding}" MethodName="Initialize" />
@@ -61,14 +61,14 @@
                  BorderThickness="0"
                  FontSize="13"
                  behaviors:EscapeClearBehavior.IsEnabled="True"
-                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                 Text="{Binding DialogSearchText, UpdateSourceTrigger=PropertyChanged}" />
         <Button Grid.Column="2"
                 Width="20"
                 Height="20"
                 Margin="5,0,8,0"
                 Background="Transparent"
                 BorderThickness="0"
-                Command="{Binding ClearSearchCommand}"
+                Command="{Binding DialogClearSearchCommand}"
                 Content="&#x2715;"
                 Cursor="Hand"
                 FontSize="12"
@@ -92,7 +92,7 @@
                 </Setter.Value>
               </Setter>
               <Style.Triggers>
-                <DataTrigger Binding="{Binding HasSearchText}" Value="True">
+                <DataTrigger Binding="{Binding DialogHasSearchText}" Value="True">
                   <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
               </Style.Triggers>
@@ -119,15 +119,15 @@
               HeadersVisibility="Column"
               HorizontalGridLinesBrush="{StaticResource NeutralLightBrush}"
               IsReadOnly="True"
-              ItemsSource="{Binding FilteredItems}"
-              SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+              ItemsSource="{Binding DialogFilteredItems}"
+              SelectedItem="{Binding DialogSelectedItem, Mode=TwoWay}"
               RowBackground="{StaticResource WhiteBrush}"
               RowHeight="36"
               ScrollViewer.HorizontalScrollBarVisibility="Auto"
               ScrollViewer.VerticalScrollBarVisibility="Auto"
               SelectionMode="Single"
-              behaviors:DataGridEnterBehavior.EnterCommand="{Binding OkCommand}"
-              behaviors:DataGridScrollIntoViewBehavior.ScrollIntoViewItem="{Binding SelectedItem}"
+              behaviors:DataGridEnterBehavior.EnterCommand="{Binding DialogOkCommand}"
+              behaviors:DataGridScrollIntoViewBehavior.ScrollIntoViewItem="{Binding DialogSelectedItem}"
               ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
               CellStyle="{StaticResource DataGridCellStyle}"
               RowStyle="{StaticResource DataGridRowStyle}">
@@ -137,7 +137,7 @@
     <Border Grid.Row="1"
             Margin="12,0,12,8"
             Background="#80FFFFFF"
-            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            Visibility="{Binding DialogIsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
       <TextBlock Text="Loading..."
                  HorizontalAlignment="Center"
                  VerticalAlignment="Center"
@@ -150,7 +150,7 @@
                Margin="12,0,12,8"
                FontSize="11"
                Foreground="{StaticResource TextTertiaryBrush}"
-               Text="{Binding ItemsCount, StringFormat='{}{0} items'}" />
+               Text="{Binding DialogItemsCount, StringFormat='{}{0} items'}" />
 
     <!--  Buttons  -->
     <StackPanel Grid.Row="3"
@@ -160,12 +160,12 @@
       <Button Width="80"
               Height="32"
               Margin="0,0,8,0"
-              Command="{Binding CancelCommand}"
+              Command="{Binding DialogCancelCommand}"
               Content="Cancel"
               Style="{StaticResource GrayButtonStyle}" />
       <Button Width="80"
               Height="32"
-              Command="{Binding OkCommand}"
+              Command="{Binding DialogOkCommand}"
               Content="OK"
               IsDefault="True"
               Style="{StaticResource BlueButtonStyle}" />

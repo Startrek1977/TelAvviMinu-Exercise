@@ -21,11 +21,20 @@ namespace TelAvivMuni_Exercise.Services
 
             var mainWindow = Application.Current.MainWindow;
 
-            // Create fresh instances each time (simple, no state leakage, GC handles cleanup)
-            var viewModel = new DataBrowserDialogViewModel(items, currentSelection, columns);
+            // Use MainWindowViewModel directly - no separate dialog ViewModel needed
+            var mainViewModel = mainWindow.DataContext as MainWindowViewModel;
+            if (mainViewModel == null)
+            {
+                MessageBox.Show("Unable to access main view model.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return currentSelection;
+            }
+
+            // Prepare the dialog state on the main ViewModel
+            mainViewModel.PrepareDialog(items, currentSelection, columns);
+
             var dialog = new DataBrowserDialog
             {
-                DataContext = viewModel,
+                DataContext = mainViewModel,
                 Title = title,
                 Owner = mainWindow
             };
@@ -36,7 +45,7 @@ namespace TelAvivMuni_Exercise.Services
 
             if (dialog.ShowDialog() == true)
             {
-                return viewModel.SelectedItem;
+                return mainViewModel.DialogSelectedItem;
             }
 
             return currentSelection;
